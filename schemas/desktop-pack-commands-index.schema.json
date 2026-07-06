@@ -1,0 +1,313 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://gaoxia.local/long-novel-agent/desktop-pack-commands-index.schema.json",
+  "title": "Long Novel Agent Desktop Pack Commands Index",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "$schema",
+    "type",
+    "generated_at",
+    "project_dir",
+    "output_dir",
+    "platform",
+    "mode",
+    "target_chapter",
+    "local_only",
+    "requires_server",
+    "writes_project_state",
+    "writes_install_config",
+    "writes_pack_files",
+    "records_real_client_evidence",
+    "command_count",
+    "group_count",
+    "read_only_count",
+    "write_scope_counts",
+    "groups",
+    "by_stage",
+    "safety_notes",
+    "source_files"
+  ],
+  "properties": {
+    "$schema": {
+      "type": "string",
+      "minLength": 1
+    },
+    "type": {
+      "const": "desktop_pack_commands_index"
+    },
+    "generated_at": {
+      "type": "string",
+      "minLength": 1
+    },
+    "project_dir": {
+      "type": "string",
+      "minLength": 1
+    },
+    "output_dir": {
+      "type": "string",
+      "minLength": 1
+    },
+    "platform": {
+      "type": "string",
+      "minLength": 1
+    },
+    "mode": {
+      "enum": [
+        "read-only",
+        "writer"
+      ]
+    },
+    "target_chapter": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "local_only": {
+      "const": true
+    },
+    "requires_server": {
+      "const": false
+    },
+    "writes_project_state": {
+      "const": false
+    },
+    "writes_install_config": {
+      "const": false
+    },
+    "writes_pack_files": {
+      "const": false
+    },
+    "records_real_client_evidence": {
+      "const": false
+    },
+    "command_count": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "group_count": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "read_only_count": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "write_scope_counts": {
+      "$ref": "#/$defs/writeScopeCounts"
+    },
+    "groups": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/group"
+      }
+    },
+    "by_stage": {
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "#/$defs/stringList"
+      }
+    },
+    "safety_notes": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "source_files": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    }
+  },
+  "$defs": {
+    "stringList": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "writeScopeCounts": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "read_only",
+        "writes_project_state",
+        "writes_install_config",
+        "writes_pack_files",
+        "requires_review",
+        "requires_author_confirmation"
+      ],
+      "properties": {
+        "read_only": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "writes_project_state": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "writes_install_config": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "writes_pack_files": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "requires_review": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "requires_author_confirmation": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "group": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "title",
+        "purpose",
+        "read_first",
+        "command_count",
+        "command_keys",
+        "writes_project_state",
+        "writes_install_config",
+        "writes_pack_files",
+        "requires_review",
+        "requires_author_confirmation",
+        "commands"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_]*$"
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1
+        },
+        "purpose": {
+          "type": "string",
+          "minLength": 1
+        },
+        "read_first": {
+          "$ref": "#/$defs/stringList"
+        },
+        "command_count": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "command_keys": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9_]*$"
+          }
+        },
+        "writes_project_state": {
+          "type": "boolean"
+        },
+        "writes_install_config": {
+          "type": "boolean"
+        },
+        "writes_pack_files": {
+          "type": "boolean"
+        },
+        "requires_review": {
+          "type": "boolean"
+        },
+        "requires_author_confirmation": {
+          "type": "boolean"
+        },
+        "commands": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/command"
+          }
+        }
+      }
+    },
+    "command": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "key",
+        "title",
+        "stage",
+        "command",
+        "writes_project_state",
+        "writes_install_config",
+        "writes_pack_files",
+        "requires_review",
+        "requires_author_confirmation",
+        "input_files",
+        "output_files",
+        "notes"
+      ],
+      "properties": {
+        "key": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_]*$"
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1
+        },
+        "stage": {
+          "enum": [
+            "install",
+            "verify",
+            "initialize",
+            "source_intake",
+            "evidence",
+            "writing",
+            "writer_mode",
+            "maintenance",
+            "pack",
+            "other"
+          ]
+        },
+        "command": {
+          "type": "string",
+          "minLength": 1
+        },
+        "writes_project_state": {
+          "type": "boolean"
+        },
+        "writes_install_config": {
+          "type": "boolean"
+        },
+        "writes_pack_files": {
+          "type": "boolean"
+        },
+        "requires_review": {
+          "type": "boolean"
+        },
+        "requires_author_confirmation": {
+          "type": "boolean"
+        },
+        "input_files": {
+          "$ref": "#/$defs/stringList"
+        },
+        "output_files": {
+          "$ref": "#/$defs/stringList"
+        },
+        "notes": {
+          "$ref": "#/$defs/stringList"
+        }
+      }
+    }
+  }
+}

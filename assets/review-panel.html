@@ -1,0 +1,385 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Long Novel Agent Review Panel</title>
+  <style>
+    :root {
+      color-scheme: light dark;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.45;
+    }
+    body {
+      margin: 0;
+      background: Canvas;
+      color: CanvasText;
+    }
+    header {
+      padding: 18px 24px;
+      border-bottom: 1px solid color-mix(in srgb, CanvasText 18%, transparent);
+    }
+    main {
+      display: grid;
+      grid-template-columns: 340px 1fr;
+      min-height: calc(100vh - 72px);
+    }
+    aside {
+      padding: 18px;
+      border-right: 1px solid color-mix(in srgb, CanvasText 18%, transparent);
+    }
+    section {
+      padding: 20px 24px;
+    }
+    h1 {
+      margin: 0;
+      font-size: 20px;
+    }
+    h2 {
+      margin: 0 0 12px;
+      font-size: 16px;
+    }
+    h3 {
+      margin: 0 0 8px;
+      font-size: 14px;
+    }
+    label {
+      display: block;
+      margin: 0 0 14px;
+      font-size: 13px;
+    }
+    input {
+      display: block;
+      width: 100%;
+      box-sizing: border-box;
+      margin-top: 6px;
+      padding: 6px 8px;
+    }
+    button {
+      border: 1px solid color-mix(in srgb, CanvasText 28%, transparent);
+      border-radius: 6px;
+      background: color-mix(in srgb, CanvasText 7%, Canvas);
+      color: CanvasText;
+      padding: 6px 10px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: color-mix(in srgb, CanvasText 12%, Canvas);
+    }
+    pre {
+      overflow: auto;
+      padding: 14px;
+      border: 1px solid color-mix(in srgb, CanvasText 18%, transparent);
+      border-radius: 6px;
+      background: color-mix(in srgb, CanvasText 6%, Canvas);
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+    ul {
+      margin: 0;
+      padding-left: 18px;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 14px;
+    }
+    .panel {
+      border: 1px solid color-mix(in srgb, CanvasText 18%, transparent);
+      border-radius: 6px;
+      padding: 14px;
+    }
+    .wide {
+      grid-column: 1 / -1;
+    }
+    .muted {
+      color: color-mix(in srgb, CanvasText 62%, transparent);
+      font-size: 13px;
+    }
+    .status {
+      display: inline-block;
+      border-radius: 999px;
+      padding: 2px 8px;
+      font-size: 12px;
+      border: 1px solid color-mix(in srgb, CanvasText 20%, transparent);
+    }
+    .ok {
+      background: color-mix(in srgb, green 18%, Canvas);
+    }
+    .risk-medium {
+      background: color-mix(in srgb, orange 24%, Canvas);
+    }
+    .risk-high {
+      background: color-mix(in srgb, red 22%, Canvas);
+    }
+    .toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 10px;
+    }
+    @media (max-width: 820px) {
+      main {
+        grid-template-columns: 1fr;
+      }
+      aside {
+        border-right: 0;
+        border-bottom: 1px solid color-mix(in srgb, CanvasText 18%, transparent);
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Long Novel Agent Review Panel</h1>
+    <div class="muted">加载 proposal、diff、audit 或 snapshot JSON，人工确认写后更新。</div>
+  </header>
+  <main>
+    <aside>
+      <label>Novel project directory
+        <input id="projectDir" value="/path/to/novel">
+      </label>
+      <label>CLI command prefix
+        <input id="cliPrefix" value="python /path/to/long-novel-agent/cli.py">
+      </label>
+      <label>Proposal JSON
+        <input id="proposalFile" type="file" accept=".json,.jsonl,application/json">
+      </label>
+      <label>Diff JSON
+        <input id="diffFile" type="file" accept=".json,.jsonl,application/json">
+      </label>
+      <label>Audit JSON / JSONL
+        <input id="auditFile" type="file" accept=".json,.jsonl,application/json">
+      </label>
+      <label>Snapshots JSON
+        <input id="snapshotFile" type="file" accept=".json,.jsonl,application/json">
+      </label>
+      <p class="muted">本页面只在浏览器本地读取文件，不调用 CLI，也不修改 .novel-agent。</p>
+    </aside>
+    <section>
+      <div class="grid">
+        <div class="panel">
+          <h2>Proposal Summary</h2>
+          <div id="proposalSummary" class="muted">未加载</div>
+        </div>
+        <div class="panel">
+          <h2>Risk & Validation</h2>
+          <div id="riskSummary" class="muted">未加载</div>
+        </div>
+        <div class="panel wide">
+          <h2>Commands</h2>
+          <pre id="commandOut">加载 proposal 后生成命令</pre>
+          <div class="toolbar">
+            <button id="copyCommands">Copy commands</button>
+          </div>
+        </div>
+        <div class="panel">
+          <h2>Facts</h2>
+          <div id="factsOut" class="muted">未加载</div>
+        </div>
+        <div class="panel">
+          <h2>Characters</h2>
+          <div id="charactersOut" class="muted">未加载</div>
+        </div>
+        <div class="panel">
+          <h2>Debts</h2>
+          <div id="debtsOut" class="muted">未加载</div>
+        </div>
+        <div class="panel">
+          <h2>Diff</h2>
+          <pre id="diffOut">未加载</pre>
+        </div>
+        <div class="panel">
+          <h2>Audit</h2>
+          <pre id="auditOut">未加载</pre>
+        </div>
+        <div class="panel">
+          <h2>Snapshots</h2>
+          <pre id="snapshotOut">未加载</pre>
+        </div>
+        <div class="panel wide">
+          <h2>Raw Proposal</h2>
+          <pre id="proposalRaw">未加载</pre>
+        </div>
+      </div>
+    </section>
+  </main>
+  <script>
+    const state = {
+      proposalPayload: null,
+      proposal: null,
+      diff: null,
+      audit: null,
+      snapshots: null
+    };
+
+    const bindings = [
+      ["proposalFile", "proposalPayload", onProposalLoaded],
+      ["diffFile", "diff", () => renderJson("diffOut", state.diff)],
+      ["auditFile", "audit", () => renderJson("auditOut", state.audit)],
+      ["snapshotFile", "snapshots", () => renderJson("snapshotOut", state.snapshots)]
+    ];
+
+    for (const [inputId, key, afterLoad] of bindings) {
+      document.getElementById(inputId).addEventListener("change", async (event) => {
+        const file = event.target.files[0];
+        if (!file) return;
+        const text = await file.text();
+        state[key] = parseJsonLike(text);
+        afterLoad();
+      });
+    }
+
+    for (const id of ["projectDir", "cliPrefix"]) {
+      document.getElementById(id).addEventListener("input", renderCommands);
+    }
+
+    document.getElementById("copyCommands").addEventListener("click", async () => {
+      const text = document.getElementById("commandOut").textContent;
+      await navigator.clipboard.writeText(text);
+    });
+
+    function onProposalLoaded() {
+      state.proposal = normalizeProposal(state.proposalPayload);
+      renderProposalSummary();
+      renderRiskSummary();
+      renderChanges("factsOut", state.proposal.facts || [], renderFact);
+      renderChanges("charactersOut", state.proposal.characters || [], renderCharacter);
+      renderChanges("debtsOut", state.proposal.debts || [], renderDebt);
+      renderJson("proposalRaw", state.proposalPayload);
+      renderCommands();
+    }
+
+    function normalizeProposal(payload) {
+      if (!payload) return {};
+      if (payload.proposal && typeof payload.proposal === "object") return payload.proposal;
+      if (payload.template && typeof payload.template === "object") return payload.template;
+      return payload;
+    }
+
+    function renderProposalSummary() {
+      const target = document.getElementById("proposalSummary");
+      if (!state.proposal || !Object.keys(state.proposal).length) {
+        target.textContent = "未加载";
+        return;
+      }
+      const proposal = state.proposal;
+      const rows = [
+        ["ID", proposal.id || "(inline proposal)"],
+        ["Chapter", proposal.chapter || ""],
+        ["Status", proposal.status || ""],
+        ["Facts", (proposal.facts || []).length],
+        ["Characters", (proposal.characters || []).length],
+        ["Debts", (proposal.debts || []).length],
+        ["Handoff", proposal.handoff ? "yes" : "no"]
+      ];
+      target.innerHTML = tableList(rows);
+    }
+
+    function renderRiskSummary() {
+      const target = document.getElementById("riskSummary");
+      if (!state.proposal || !Object.keys(state.proposal).length) {
+        target.textContent = "未加载";
+        return;
+      }
+      const validation = state.proposalPayload?.validation || {};
+      const risk = state.proposal.risk || validation.risk || {};
+      const level = (risk.level || "low").toLowerCase();
+      const ok = validation.ok;
+      const issues = validation.issues || [];
+      const items = risk.items || [];
+      const statusClass = level === "high" ? "risk-high" : (level === "medium" ? "risk-medium" : "ok");
+      const html = [
+        `<p><span class="status ${statusClass}">risk: ${escapeHtml(level)}</span></p>`,
+        `<p>validation: ${ok === undefined ? "not loaded" : (ok ? "ok" : "needs revision")}</p>`,
+        items.length ? `<h3>Risk items</h3>${list(items.map((item) => `${item.category || "risk"}: ${item.message || item.matched || ""}`))}` : "<p class=\"muted\">No risk items.</p>",
+        issues.length ? `<h3>Validation issues</h3>${list(issues.map((item) => `${item.severity || "issue"} / ${item.type || ""}: ${item.message || ""}`))}` : "<p class=\"muted\">No validation issues loaded.</p>"
+      ].join("");
+      target.innerHTML = html;
+    }
+
+    function renderCommands() {
+      const proposal = state.proposal || {};
+      const proposalId = proposal.id || "";
+      if (!proposalId) {
+        document.getElementById("commandOut").textContent = "加载带 id 的 proposal 后生成命令";
+        return;
+      }
+      const cli = document.getElementById("cliPrefix").value.trim() || "python /path/to/long-novel-agent/cli.py";
+      const project = document.getElementById("projectDir").value.trim() || "/path/to/novel";
+      const qProject = shellQuote(project);
+      const qId = shellQuote(proposalId);
+      const commands = [
+        `${cli} validate-proposal ${qProject} --proposal-id ${qId}`,
+        `${cli} diff-proposal ${qProject} --proposal-id ${qId}`,
+        `${cli} apply-after-write ${qProject} --proposal-id ${qId}`,
+        `${cli} reject-proposal ${qProject} --proposal-id ${qId} --reason ${shellQuote("author rejected")}`
+      ];
+      document.getElementById("commandOut").textContent = commands.join("\n");
+    }
+
+    function renderChanges(outputId, items, renderer) {
+      const target = document.getElementById(outputId);
+      if (!items.length) {
+        target.textContent = "无";
+        return;
+      }
+      target.innerHTML = list(items.map(renderer));
+    }
+
+    function renderFact(item) {
+      return `${item.kind || "fact"} / ${item.subject || ""} / ${item.predicate || ""} / ${item.object || ""}`;
+    }
+
+    function renderCharacter(item) {
+      return `${item.name || item.character || "character"}: ${item.state || item.current_state || item.phase || ""}`;
+    }
+
+    function renderDebt(item) {
+      return `${item.title || item.debt_content || item.id || "debt"}: ${item.status || item.debt_status || ""}`;
+    }
+
+    function renderJson(outputId, value) {
+      document.getElementById(outputId).textContent = value ? JSON.stringify(value, null, 2) : "未加载";
+    }
+
+    function parseJsonLike(text) {
+      const trimmed = text.trim();
+      if (!trimmed) return null;
+      try {
+        return JSON.parse(trimmed);
+      } catch {
+        const rows = trimmed.split(/\n+/).filter(Boolean).map((line) => {
+          try {
+            return JSON.parse(line);
+          } catch {
+            return line;
+          }
+        });
+        return rows;
+      }
+    }
+
+    function tableList(rows) {
+      return `<ul>${rows.map(([key, value]) => `<li><strong>${escapeHtml(key)}:</strong> ${escapeHtml(String(value ?? ""))}</li>`).join("")}</ul>`;
+    }
+
+    function list(items) {
+      return `<ul>${items.map((item) => `<li>${escapeHtml(String(item))}</li>`).join("")}</ul>`;
+    }
+
+    function escapeHtml(value) {
+      return value
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll("\"", "&quot;")
+        .replaceAll("'", "&#039;");
+    }
+
+    function shellQuote(value) {
+      return `'${String(value).replaceAll("'", "'\\''")}'`;
+    }
+  </script>
+</body>
+</html>

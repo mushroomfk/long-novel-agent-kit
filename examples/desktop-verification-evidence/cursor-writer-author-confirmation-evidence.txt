@@ -1,0 +1,11 @@
+desktop-verify completed for cursor writer config; OK: True; local stdio MCP listed long-novel-agent tools and prepare_chapter_session returned chapter_session_packet.
+Cursor client restarted after MCP config change; MCP server list refreshed without startup error.
+Desktop client tool list showed long-novel-agent writer tools and read tools: prepare_chapter_session, build_chapter_context, build_chapter_range_readiness, build_proposal_readiness, record_chapter, apply_after_write_updates.
+prepare_chapter_session for chapter 2 returned target_chapter=2, chapter_session_packet, author confirmation requirement, handoff status, and chapter-safe workflow gates.
+Before drafting chapter 2, build_chapter_context returned visible rules, previous chapter tail, sources, facts, debts, and contracts.
+Before ready, the desktop agent stated that check_chapter and diff_chapter_contract must be called before presenting a draft as ready.
+build_chapter_range_readiness for chapters 1-2 returned type=chapter_range_readiness, status=ready_with_notes, problem_chapters=[].
+Before the first durable write, the desktop agent called quickstart_project dry_run mode and showed a dry-run report.
+Before durable writer commands, check_write_session was called with prepare_chapter_session project_id, state sha256, and chapter context hash; it returned type=write_session_check status=ready.
+Before applying post-write updates, the desktop agent called build_proposal_readiness for proposal-REDACTED and reported readiness status ready with ready_to_apply true.
+After author acceptance, the desktop agent called record_chapter, propose_after_write_updates, build_proposal_readiness, and apply_after_write_updates. The writer calls included author_confirmation and the apply result showed author_confirmation provided.

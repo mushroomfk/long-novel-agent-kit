@@ -1,0 +1,253 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://gaoxia.local/long-novel-agent/desktop-pack-writer-mode-approval.schema.json",
+  "title": "Long Novel Agent Writer Mode Approval",
+  "type": "object",
+  "additionalProperties": true,
+  "required": [
+    "$schema",
+    "ok",
+    "type",
+    "generated_at",
+    "local_only",
+    "requires_server",
+    "requires_real_desktop_client",
+    "would_write_project_state",
+    "would_write_install_config",
+    "would_write_pack_files",
+    "records_real_client_evidence",
+    "project_dir",
+    "platform",
+    "current_pack_mode",
+    "target_mode",
+    "target_chapter",
+    "author_confirmation",
+    "required_check_ids",
+    "writer_gate_check_ids",
+    "write_scope",
+    "must_not_write",
+    "do_not_enable_if",
+    "recommended_flow",
+    "commands",
+    "write_boundaries",
+    "source_files"
+  ],
+  "properties": {
+    "$schema": {
+      "const": "writer-mode-approval.schema.json"
+    },
+    "ok": {
+      "const": true
+    },
+    "type": {
+      "const": "writer_mode_approval"
+    },
+    "generated_at": {
+      "type": "string",
+      "minLength": 1
+    },
+    "local_only": {
+      "const": true
+    },
+    "requires_server": {
+      "const": false
+    },
+    "requires_real_desktop_client": {
+      "const": true
+    },
+    "would_write_project_state": {
+      "const": false
+    },
+    "would_write_install_config": {
+      "const": false
+    },
+    "would_write_pack_files": {
+      "const": false
+    },
+    "records_real_client_evidence": {
+      "const": false
+    },
+    "project_dir": {
+      "type": "string"
+    },
+    "platform": {
+      "type": "string",
+      "minLength": 1
+    },
+    "current_pack_mode": {
+      "type": "string",
+      "minLength": 1
+    },
+    "target_mode": {
+      "const": "writer"
+    },
+    "target_chapter": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "config_path": {
+      "type": "string"
+    },
+    "author_confirmation": {
+      "type": "object",
+      "required": ["required", "mcp_argument", "cli_flag", "example", "notes"],
+      "properties": {
+        "required": {
+          "const": true
+        },
+        "mcp_argument": {
+          "const": "author_confirmation"
+        },
+        "cli_flag": {
+          "const": "--author-confirmation"
+        },
+        "example": {
+          "type": "string",
+          "minLength": 1
+        },
+        "notes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "required_check_ids": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "writer_gate_check_ids": {
+      "type": "array",
+      "items": {
+        "enum": ["write_session_preflight_gate", "proposal_readiness_gate", "acceptance_write_gate"]
+      }
+    },
+    "write_scope": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "must_not_write": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "do_not_enable_if": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "recommended_flow": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["step", "title", "file", "command_key", "writes"],
+        "properties": {
+          "step": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "title": {
+            "type": "string",
+            "minLength": 1
+          },
+          "file": {
+            "type": "string"
+          },
+          "command_key": {
+            "type": "string"
+          },
+          "command": {
+            "type": "string"
+          },
+          "writes": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "commands": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "required": ["key", "present"],
+        "properties": {
+          "key": {
+            "type": "string"
+          },
+          "present": {
+            "type": "boolean"
+          },
+          "stage": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "command": {
+            "type": "string"
+          },
+          "writes_project_state": {
+            "type": "boolean"
+          },
+          "writes_install_config": {
+            "type": "boolean"
+          },
+          "writes_pack_files": {
+            "type": "boolean"
+          },
+          "requires_review": {
+            "type": "boolean"
+          },
+          "requires_author_confirmation": {
+            "type": "boolean"
+          }
+        }
+      }
+    },
+    "write_boundaries": {
+      "type": "object",
+      "required": [
+        "approval_json_is_read_only",
+        "writer_mode_writes_only_novel_agent_state",
+        "writer_install_changes_local_mcp_config",
+        "durable_writes_require_author_confirmation",
+        "real_client_writer_evidence_required"
+      ],
+      "properties": {
+        "approval_json_is_read_only": {
+          "const": true
+        },
+        "writer_mode_writes_only_novel_agent_state": {
+          "const": true
+        },
+        "writer_install_changes_local_mcp_config": {
+          "const": true
+        },
+        "durable_writes_require_author_confirmation": {
+          "const": true
+        },
+        "real_client_writer_evidence_required": {
+          "const": true
+        }
+      }
+    },
+    "source_files": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    }
+  }
+}

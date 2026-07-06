@@ -1,0 +1,46 @@
+{
+  "facts": [
+    {
+      "kind": "prop",
+      "subject": "墨钥",
+      "predicate": "holder",
+      "object": "黎星",
+      "chapter_range": "1+",
+      "forbidden_phrases": ["墨钥交给秦疏", "墨钥交给白石商会"],
+      "evidence": "黎星把墨钥藏进袖袋，确认墨钥仍由黎星保管。"
+    },
+    {
+      "kind": "event",
+      "subject": "账册缺页",
+      "predicate": "status",
+      "object": "未查明",
+      "chapter_range": "1+",
+      "evidence": "她在潮档馆发现账册缺页，缺页边角留着河灯纸灰。"
+    },
+    {
+      "kind": "location",
+      "subject": "秦疏",
+      "predicate": "location",
+      "object": "潮档馆后门",
+      "chapter_range": "1+",
+      "evidence": "秦疏守在潮档馆后门，提醒她钟楼密室仍需封存。"
+    }
+  ],
+  "characters": [
+    {
+      "name": "黎星",
+      "state": "持有墨钥，发现账册缺页。",
+      "evidence": "黎星把墨钥藏进袖袋，确认墨钥仍由黎星保管。"
+    }
+  ],
+  "debts": [
+    {
+      "title": "账册缺页",
+      "detail": "缺页去向未查明，不能提前揭示真相。",
+      "status": "open",
+      "evidence": "她在潮档馆发现账册缺页，缺页边角留着河灯纸灰。"
+    }
+  ],
+  "handoff": "下一章追查河灯纸灰；墨钥仍由黎星保管；钟楼密室继续封存。"
+}
+

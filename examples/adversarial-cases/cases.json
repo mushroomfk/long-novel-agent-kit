@@ -1,0 +1,149 @@
+{
+  "version": 1,
+  "cases": [
+    {
+      "id": "prop-transfer-and-future-spoiler",
+      "description": "A draft transfers a protected prop and reveals future-only identity.",
+      "setup": {
+        "facts": [
+          {
+            "kind": "prop",
+            "subject": "铜钥匙",
+            "predicate": "holder",
+            "object": "林追",
+            "forbidden_phrases": ["铜钥匙交给白石商会"]
+          }
+        ],
+        "rules": {
+          "future_markers": [
+            {
+              "text": "潮师真身",
+              "reveal_after_chapter": 5
+            }
+          ]
+        }
+      },
+      "chapter": 2,
+      "draft": "林追在雨里把铜钥匙交给白石商会，随后听见有人说出潮师真身。",
+      "expected_issue_types": ["fact_conflict", "future_marker", "prop_ownership_conflict"]
+    },
+    {
+      "id": "contract-missing-and-forbidden",
+      "description": "A draft skips a required beat and performs a forbidden move.",
+      "setup": {
+        "contracts": [
+          {
+            "id": "contract-002",
+            "chapter_ranges": [{"start": 2, "end": 2}],
+            "required_beats": ["林追检查缺页账册"],
+            "forbidden_moves": ["提前揭示白石商会主谋"]
+          }
+        ]
+      },
+      "chapter": 2,
+      "draft": "众人提前揭示白石商会主谋在堂前露出笑意，立刻明白了一切。",
+      "expected_issue_types": ["contract_missing_beat", "contract_forbidden_move"],
+      "expected_contract_status": "needs_revision"
+    },
+    {
+      "id": "high-risk-proposal",
+      "description": "A proposal records death and identity reveal, which must be flagged for author review.",
+      "chapter": 3,
+      "draft": "顾临死亡前说出林追的卧底身份，厅中只剩铜钥匙的冷光。",
+      "proposal": {
+        "facts": [
+          {
+            "kind": "event",
+            "subject": "顾临",
+            "predicate": "state",
+            "object": "死亡",
+            "chapter_range": "3+",
+            "evidence": "顾临死亡前说出林追的卧底身份"
+          }
+        ],
+        "characters": [
+          {
+            "name": "林追",
+            "state": "卧底身份被顾临揭露",
+            "evidence": "顾临死亡前说出林追的卧底身份"
+          }
+        ],
+        "handoff": "下一章处理顾临死亡和林追卧底身份暴露的后果。"
+      },
+      "expected_risk_level": "high"
+    },
+    {
+      "id": "handoff-conflicting-proposal",
+      "description": "A second agent proposes a durable fact that contradicts the previous accepted agent state.",
+      "setup": {
+        "facts": [
+          {
+            "kind": "prop",
+            "subject": "铜钥匙",
+            "predicate": "holder",
+            "object": "林追"
+          }
+        ]
+      },
+      "chapter": 2,
+      "draft": "林追仍把铜钥匙收在袖中。顾临声称铜钥匙交给顾临只是试探。",
+      "proposal": {
+        "facts": [
+          {
+            "kind": "prop",
+            "subject": "铜钥匙",
+            "predicate": "holder",
+            "object": "顾临",
+            "chapter_range": "2+",
+            "evidence": "铜钥匙交给顾临"
+          }
+        ],
+        "handoff": "下一章处理铜钥匙归属争议。"
+      },
+      "expected_risk_level": "medium",
+      "expected_validation_issue_types": ["fact_conflicts_existing", "medium_risk_update"],
+      "expected_apply_rejected": true
+    },
+    {
+      "id": "structured-continuity-facts",
+      "description": "A draft contradicts structured timeline, location, relationship, and life-state facts.",
+      "setup": {
+        "facts": [
+          {
+            "kind": "location",
+            "subject": "林追",
+            "predicate": "current_location",
+            "object": "青石巷"
+          },
+          {
+            "kind": "location",
+            "subject": "顾临",
+            "predicate": "current_location",
+            "object": "白石商会"
+          },
+          {
+            "kind": "relationship",
+            "subject": "林追/顾临",
+            "predicate": "relationship",
+            "object": "敌对"
+          },
+          {
+            "kind": "character",
+            "subject": "顾临",
+            "predicate": "status",
+            "object": "存活"
+          },
+          {
+            "kind": "timeline",
+            "subject": "顾临到达码头",
+            "predicate": "after",
+            "object": "林追取得铜钥匙"
+          }
+        ]
+      },
+      "chapter": 4,
+      "draft": "林追在白石商会听见顾临死亡的消息。林追和顾临结盟之后，顾临到达码头，林追取得铜钥匙。",
+      "expected_issue_types": ["location_state_conflict", "relationship_state_conflict", "life_state_conflict", "timeline_order_conflict"]
+    }
+  ]
+}

@@ -1,0 +1,227 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://gaoxia.local/long-novel-agent/desktop-pack-acceptance-review.schema.json",
+  "title": "Long Novel Agent Acceptance Review",
+  "type": "object",
+  "additionalProperties": true,
+  "required": [
+    "$schema",
+    "ok",
+    "type",
+    "generated_at",
+    "local_only",
+    "requires_server",
+    "would_write_project_state",
+    "would_write_install_config",
+    "would_write_pack_files",
+    "records_real_client_evidence",
+    "project_dir",
+    "output_dir",
+    "platform",
+    "mode",
+    "target_chapter",
+    "status",
+    "summary",
+    "acceptance_paths",
+    "writer_guard",
+    "write_boundaries",
+    "source_files",
+    "notes"
+  ],
+  "properties": {
+    "$schema": {
+      "const": "acceptance-review.schema.json"
+    },
+    "ok": {
+      "type": "boolean"
+    },
+    "type": {
+      "const": "acceptance_review"
+    },
+    "generated_at": {
+      "type": "string"
+    },
+    "local_only": {
+      "const": true
+    },
+    "requires_server": {
+      "const": false
+    },
+    "would_write_project_state": {
+      "const": false
+    },
+    "would_write_install_config": {
+      "const": false
+    },
+    "would_write_pack_files": {
+      "const": false
+    },
+    "records_real_client_evidence": {
+      "const": false
+    },
+    "project_dir": {
+      "type": "string"
+    },
+    "output_dir": {
+      "type": "string"
+    },
+    "platform": {
+      "type": "string"
+    },
+    "mode": {
+      "type": "string"
+    },
+    "target_chapter": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "needs_pack_repair",
+        "needs_project_initialization",
+        "needs_revision",
+        "needs_author_review",
+        "ready_for_author_review"
+      ]
+    },
+    "summary": {
+      "type": "object",
+      "additionalProperties": true
+    },
+    "acceptance_paths": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": true,
+        "required": [
+          "id",
+          "title",
+          "when",
+          "read_first",
+          "commands",
+          "requires_author_confirmation",
+          "requires_write_session_check",
+          "state_files_that_may_change",
+          "durable_writes_not_performed_by_this_file"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "when": {
+            "type": "string"
+          },
+          "read_first": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "commands": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": true,
+              "required": [
+                "key",
+                "present"
+              ],
+              "properties": {
+                "key": {
+                  "type": "string"
+                },
+                "present": {
+                  "type": "boolean"
+                },
+                "writes_project_state": {
+                  "type": "boolean"
+                },
+                "requires_author_confirmation": {
+                  "type": "boolean"
+                }
+              }
+            }
+          },
+          "requires_author_confirmation": {
+            "type": "boolean"
+          },
+          "requires_write_session_check": {
+            "type": "boolean"
+          },
+          "state_files_that_may_change": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "durable_writes_not_performed_by_this_file": {
+            "const": true
+          }
+        }
+      }
+    },
+    "writer_guard": {
+      "type": "object",
+      "additionalProperties": true
+    },
+    "author_review_preview": {
+      "type": "array"
+    },
+    "author_decisions": {
+      "type": "array"
+    },
+    "write_boundaries": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": [
+        "acceptance_review_is_read_only",
+        "does_not_approve_author_acceptance",
+        "does_not_record_chapters",
+        "does_not_apply_proposals",
+        "does_not_change_mcp_config",
+        "writer_commands_need_explicit_author_confirmation",
+        "read_only_agents_must_not_run_durable_writer_commands"
+      ],
+      "properties": {
+        "acceptance_review_is_read_only": {
+          "const": true
+        },
+        "does_not_approve_author_acceptance": {
+          "const": true
+        },
+        "does_not_record_chapters": {
+          "const": true
+        },
+        "does_not_apply_proposals": {
+          "const": true
+        },
+        "does_not_change_mcp_config": {
+          "const": true
+        },
+        "writer_commands_need_explicit_author_confirmation": {
+          "const": true
+        },
+        "read_only_agents_must_not_run_durable_writer_commands": {
+          "const": true
+        }
+      }
+    },
+    "source_files": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "notes": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  }
+}

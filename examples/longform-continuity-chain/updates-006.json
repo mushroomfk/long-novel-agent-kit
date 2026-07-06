@@ -1,0 +1,45 @@
+{
+  "facts": [
+    {
+      "kind": "event",
+      "subject": "银铃送信人",
+      "predicate": "points_to",
+      "object": "白石旧渡信封",
+      "chapter_range": "6+",
+      "evidence": "银铃送信人承认替河灯纸买主递过信，却只说信封来自白石旧渡。"
+    },
+    {
+      "kind": "prop",
+      "subject": "墨钥",
+      "predicate": "holder",
+      "object": "黎星",
+      "chapter_range": "6+",
+      "forbidden_phrases": ["墨钥交给陆衡", "墨钥交给白石商会"],
+      "evidence": "黎星把墨钥贴身收好。"
+    },
+    {
+      "kind": "life_state",
+      "subject": "秦疏",
+      "predicate": "status",
+      "object": "活着",
+      "chapter_range": "6+",
+      "evidence": "秦疏活着守在潮档馆后门。"
+    }
+  ],
+  "characters": [
+    {
+      "name": "黎星",
+      "state": "持有墨钥，准备追查白石旧渡的信封来源。",
+      "evidence": "黎星把墨钥贴身收好。"
+    }
+  ],
+  "debts": [
+    {
+      "title": "白石旧渡信封",
+      "detail": "银铃送信人只说信封来自白石旧渡，第 7 章只能追查信封来源。",
+      "status": "open",
+      "evidence": "信封来自白石旧渡。"
+    }
+  ],
+  "handoff": "第 7 章只能追查白石旧渡的信封来源；不得揭示账册缺页真相；秦疏必须活着；墨钥仍归黎星。"
+}

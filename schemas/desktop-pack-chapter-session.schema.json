@@ -1,0 +1,242 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://gaoxia.local/long-novel-agent/desktop-pack-chapter-session.schema.json",
+  "title": "Long Novel Agent Chapter Session",
+  "type": "object",
+  "additionalProperties": true,
+  "required": [
+    "$schema",
+    "ok",
+    "type",
+    "generated_at",
+    "project_dir",
+    "state_dir",
+    "project_identity",
+    "project_state_fingerprint",
+    "chapter_context_fingerprint",
+    "target_chapter",
+    "platform",
+    "mode",
+    "status",
+    "warnings",
+    "recommended_commands"
+  ],
+  "properties": {
+    "$schema": {
+      "type": "string",
+      "minLength": 1
+    },
+    "ok": {
+      "type": "boolean"
+    },
+    "type": {
+      "enum": [
+        "chapter_session_packet",
+        "chapter_session_pending"
+      ]
+    },
+    "generated_at": {
+      "type": "string",
+      "minLength": 1
+    },
+    "project_dir": {
+      "type": "string",
+      "minLength": 1
+    },
+    "state_dir": {
+      "type": "string",
+      "minLength": 1
+    },
+    "project_identity": {
+      "type": "object"
+    },
+    "project_state_fingerprint": {
+      "type": "object"
+    },
+    "chapter_context_fingerprint": {
+      "type": "object"
+    },
+    "target_chapter": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "platform": {
+      "type": "string",
+      "minLength": 1
+    },
+    "mode": {
+      "enum": [
+        "read-only",
+        "writer"
+      ]
+    },
+    "status": {
+      "type": "string",
+      "minLength": 1
+    },
+    "warnings": {
+      "$ref": "#/$defs/stringArray"
+    },
+    "recommended_commands": {
+      "$ref": "#/$defs/stringArray"
+    },
+    "tool_gates": {
+      "$ref": "#/$defs/toolGates"
+    },
+    "health": {
+      "type": "object"
+    },
+    "handoff_report": {
+      "type": "object"
+    },
+    "recent_agent_activity": {
+      "type": "array"
+    },
+    "open_threads": {
+      "type": "object"
+    },
+    "agent_template": {
+      "$ref": "#/$defs/agentTemplate"
+    },
+    "chapter_context": {
+      "type": "object"
+    },
+    "chapter_context_summary": {
+      "type": "object"
+    },
+    "next_actions": {
+      "$ref": "#/$defs/stringArray"
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "type": {
+            "const": "chapter_session_packet"
+          }
+        },
+        "required": [
+          "type"
+        ]
+      },
+      "then": {
+        "required": [
+          "tool_gates",
+          "health",
+          "handoff_report",
+          "open_threads",
+          "agent_template"
+        ],
+        "properties": {
+          "status": {
+            "enum": [
+              "ready",
+              "needs_attention"
+            ]
+          }
+        },
+        "anyOf": [
+          {
+            "required": [
+              "chapter_context"
+            ]
+          },
+          {
+            "required": [
+              "chapter_context_summary"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "type": {
+            "const": "chapter_session_pending"
+          }
+        },
+        "required": [
+          "type"
+        ]
+      },
+      "then": {
+        "required": [
+          "next_actions"
+        ],
+        "properties": {
+          "status": {
+            "const": "not_initialized"
+          }
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "stringArray": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "toolGates": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": [
+        "before_draft",
+        "before_ready",
+        "after_revision",
+        "after_author_acceptance",
+        "handoff"
+      ],
+      "properties": {
+        "before_draft": {
+          "$ref": "#/$defs/nonEmptyStringArray"
+        },
+        "before_ready": {
+          "$ref": "#/$defs/nonEmptyStringArray"
+        },
+        "after_revision": {
+          "$ref": "#/$defs/nonEmptyStringArray"
+        },
+        "after_author_acceptance": {
+          "$ref": "#/$defs/stringArray"
+        },
+        "handoff": {
+          "$ref": "#/$defs/stringArray"
+        }
+      }
+    },
+    "nonEmptyStringArray": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "agentTemplate": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": [
+        "workflow",
+        "capabilities_to_declare"
+      ],
+      "properties": {
+        "workflow": {
+          "$ref": "#/$defs/stringArray"
+        },
+        "capabilities_to_declare": {
+          "$ref": "#/$defs/stringArray"
+        },
+        "mcp_start_mode": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      }
+    }
+  }
+}

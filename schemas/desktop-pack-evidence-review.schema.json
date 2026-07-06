@@ -1,0 +1,195 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://gaoxia.local/long-novel-agent/desktop-pack-evidence-review.schema.json",
+  "title": "Long Novel Agent Desktop Evidence Review",
+  "type": "object",
+  "additionalProperties": true,
+  "required": [
+    "$schema",
+    "ok",
+    "type",
+    "generated_at",
+    "status",
+    "local_only",
+    "requires_server",
+    "requires_real_desktop_client",
+    "would_write_project_state",
+    "would_write_install_config",
+    "would_write_pack_files",
+    "records_real_client_evidence",
+    "platform",
+    "mode",
+    "project_dir",
+    "target_chapter",
+    "source",
+    "required_total",
+    "required_passed_with_evidence",
+    "missing_required_check_ids",
+    "safety_warnings",
+    "evidence_session",
+    "evidence_packet",
+    "saved_verification",
+    "next_actions",
+    "recommended_commands"
+  ],
+  "properties": {
+    "$schema": {
+      "const": "desktop-evidence-review.schema.json"
+    },
+    "ok": {
+      "type": "boolean"
+    },
+    "type": {
+      "const": "desktop_evidence_review"
+    },
+    "generated_at": {
+      "type": "string",
+      "minLength": 1
+    },
+    "status": {
+      "enum": [
+        "ready_to_record",
+        "needs_revision",
+        "needs_evidence",
+        "recorded",
+        "recorded_elsewhere"
+      ]
+    },
+    "local_only": {
+      "const": true
+    },
+    "requires_server": {
+      "const": false
+    },
+    "requires_real_desktop_client": {
+      "const": true
+    },
+    "would_write_project_state": {
+      "const": false
+    },
+    "would_write_install_config": {
+      "const": false
+    },
+    "would_write_pack_files": {
+      "const": false
+    },
+    "records_real_client_evidence": {
+      "const": false
+    },
+    "platform": {
+      "type": "string",
+      "minLength": 1
+    },
+    "mode": {
+      "enum": [
+        "read-only",
+        "writer"
+      ]
+    },
+    "project_dir": {
+      "type": "string",
+      "minLength": 1
+    },
+    "target_chapter": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "config_path": {
+      "type": "string"
+    },
+    "source": {
+      "type": "string",
+      "minLength": 1
+    },
+    "required_total": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "required_passed_with_evidence": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "missing_required_check_ids": {
+      "$ref": "#/$defs/stringArray"
+    },
+    "safety_warnings": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "evidence_session": {
+      "$ref": "#/$defs/evidenceSessionSummary"
+    },
+    "evidence_packet": {
+      "type": "object"
+    },
+    "results_doctor": {
+      "type": [
+        "object",
+        "null"
+      ]
+    },
+    "saved_verification": {
+      "$ref": "#/$defs/savedVerification"
+    },
+    "next_actions": {
+      "$ref": "#/$defs/stringArray"
+    },
+    "recommended_commands": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string"
+      }
+    }
+  },
+  "$defs": {
+    "stringArray": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "evidenceSessionSummary": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": [
+        "required_check_ids",
+        "copy_prompt_count",
+        "result_file",
+        "evidence_file"
+      ],
+      "properties": {
+        "required_check_ids": {
+          "$ref": "#/$defs/stringArray"
+        },
+        "copy_prompt_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "result_file": {
+          "type": "string"
+        },
+        "evidence_file": {
+          "type": "string"
+        }
+      }
+    },
+    "savedVerification": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": [
+        "exact",
+        "reusable"
+      ],
+      "properties": {
+        "exact": {
+          "type": "object"
+        },
+        "reusable": {
+          "type": "object"
+        }
+      }
+    }
+  }
+}

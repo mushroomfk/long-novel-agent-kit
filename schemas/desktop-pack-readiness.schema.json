@@ -1,0 +1,161 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://gaoxia.local/long-novel-agent/desktop-pack-readiness.schema.json",
+  "title": "Long Novel Agent Desktop Pack Readiness",
+  "type": "object",
+  "additionalProperties": true,
+  "required": [
+    "$schema",
+    "ok",
+    "type",
+    "generated_at",
+    "local_only",
+    "requires_server",
+    "would_write_project_state",
+    "would_write_install_config",
+    "would_write_pack_files",
+    "records_real_client_evidence",
+    "platform",
+    "mode",
+    "project_dir",
+    "output_dir",
+    "target_chapter",
+    "status",
+    "summary",
+    "checks",
+    "missing_files",
+    "missing_commands",
+    "recommended_commands",
+    "next_actions"
+  ],
+  "properties": {
+    "$schema": {
+      "const": "desktop-pack-readiness.schema.json"
+    },
+    "ok": {
+      "type": "boolean"
+    },
+    "type": {
+      "const": "desktop_pack_readiness"
+    },
+    "generated_at": {
+      "type": "string",
+      "minLength": 1
+    },
+    "local_only": {
+      "const": true
+    },
+    "requires_server": {
+      "const": false
+    },
+    "would_write_project_state": {
+      "const": false
+    },
+    "would_write_install_config": {
+      "const": false
+    },
+    "would_write_pack_files": {
+      "const": false
+    },
+    "records_real_client_evidence": {
+      "const": false
+    },
+    "platform": {
+      "type": "string",
+      "minLength": 1
+    },
+    "mode": {
+      "enum": [
+        "read-only",
+        "writer"
+      ]
+    },
+    "project_dir": {
+      "type": "string",
+      "minLength": 1
+    },
+    "output_dir": {
+      "type": "string",
+      "minLength": 1
+    },
+    "target_chapter": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "status": {
+      "enum": [
+        "ready_to_share",
+        "ready_with_warnings",
+        "needs_initialization",
+        "needs_author_review",
+        "needs_real_client_evidence",
+        "needs_pack_repair",
+        "blocked"
+      ]
+    },
+    "summary": {
+      "type": "object",
+      "additionalProperties": true
+    },
+    "checks": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/check"
+      }
+    },
+    "missing_files": {
+      "$ref": "#/$defs/stringArray"
+    },
+    "missing_commands": {
+      "$ref": "#/$defs/stringArray"
+    },
+    "recommended_commands": {
+      "$ref": "#/$defs/stringArray"
+    },
+    "next_actions": {
+      "$ref": "#/$defs/stringArray"
+    },
+    "notes": {
+      "$ref": "#/$defs/stringArray"
+    }
+  },
+  "$defs": {
+    "stringArray": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "check": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": [
+        "id",
+        "ok",
+        "severity",
+        "message"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "ok": {
+          "type": "boolean"
+        },
+        "severity": {
+          "enum": [
+            "info",
+            "warning",
+            "blocker"
+          ]
+        },
+        "message": {
+          "type": "string",
+          "minLength": 1
+        },
+        "detail": {}
+      }
+    }
+  }
+}

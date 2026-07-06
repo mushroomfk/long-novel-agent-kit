@@ -1,0 +1,44 @@
+{
+  "facts": [
+    {
+      "kind": "prop",
+      "subject": "copper key",
+      "predicate": "holder",
+      "object": "Mara",
+      "chapter_range": "1+",
+      "evidence": "Mara keeps the copper key inside her sleeve before entering the archive room."
+    },
+    {
+      "kind": "event",
+      "subject": "ledger page",
+      "predicate": "status",
+      "object": "missing",
+      "chapter_range": "1+",
+      "evidence": "She finds that one ledger page is missing."
+    },
+    {
+      "kind": "event",
+      "subject": "archive page removal",
+      "predicate": "after",
+      "object": "archive bell",
+      "chapter_range": "1+",
+      "evidence": "The torn binding shows that the page was removed after the archive bell rang."
+    }
+  ],
+  "characters": [
+    {
+      "name": "Mara",
+      "state": "Holds the copper key and knows the ledger page is missing.",
+      "evidence": "Mara leaves the room with the copper key still in her sleeve and asks Oren to guard the door."
+    }
+  ],
+  "debts": [
+    {
+      "title": "Missing ledger page",
+      "detail": "The missing page must be traced before the archive secret is revealed.",
+      "status": "open",
+      "evidence": "She finds that one ledger page is missing."
+    }
+  ],
+  "handoff": "Agent B should trace the missing ledger page, keep the copper key with Mara, and avoid revealing who removed the page."
+}

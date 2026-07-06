@@ -1,0 +1,181 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://long-novel-agent.local/schemas/desktop-pack-diagnostics.schema.json",
+  "title": "Long Novel Agent Desktop Diagnostics",
+  "type": "object",
+  "required": [
+    "$schema",
+    "ok",
+    "type",
+    "generated_at",
+    "local_only",
+    "requires_server",
+    "would_write_project_state",
+    "would_write_install_config",
+    "would_write_pack_files",
+    "records_real_client_evidence",
+    "platform",
+    "mode",
+    "tool_profile",
+    "project_dir",
+    "target_chapter",
+    "config_path",
+    "pack_dir",
+    "status",
+    "next_step_status",
+    "primary_action",
+    "checks",
+    "blockers",
+    "review_items",
+    "warnings",
+    "recommended_actions",
+    "recommended_commands",
+    "reports",
+    "notes"
+  ],
+  "additionalProperties": true,
+  "properties": {
+    "$schema": {
+      "const": "desktop-diagnostics.schema.json"
+    },
+    "ok": {
+      "type": "boolean"
+    },
+    "type": {
+      "const": "desktop_diagnostics"
+    },
+    "generated_at": {
+      "type": "string"
+    },
+    "local_only": {
+      "const": true
+    },
+    "requires_server": {
+      "const": false
+    },
+    "would_write_project_state": {
+      "const": false
+    },
+    "would_write_install_config": {
+      "const": false
+    },
+    "would_write_pack_files": {
+      "const": false
+    },
+    "records_real_client_evidence": {
+      "const": false
+    },
+    "platform": {
+      "type": "string",
+      "minLength": 1
+    },
+    "mode": {
+      "enum": ["read-only", "writer"]
+    },
+    "tool_profile": {
+      "enum": ["core", "writing", "full"]
+    },
+    "project_dir": {
+      "type": "string",
+      "minLength": 1
+    },
+    "target_chapter": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "config_path": {
+      "type": "string"
+    },
+    "pack_dir": {
+      "type": "string"
+    },
+    "status": {
+      "enum": ["ready", "ready_with_warnings", "needs_review", "blocked"]
+    },
+    "next_step_status": {
+      "type": ["string", "null"]
+    },
+    "primary_action": {
+      "type": "object"
+    },
+    "checks": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/check"
+      }
+    },
+    "blockers": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "review_items": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "warnings": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "recommended_actions": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "recommended_commands": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "reports": {
+      "type": "object"
+    },
+    "notes": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "$defs": {
+    "check": {
+      "type": "object",
+      "required": ["id", "title", "ok", "severity", "message"],
+      "additionalProperties": true,
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1
+        },
+        "ok": {
+          "type": "boolean"
+        },
+        "severity": {
+          "enum": ["blocker", "review", "warning"]
+        },
+        "message": {
+          "type": "string",
+          "minLength": 1
+        },
+        "detail": {},
+        "command": {
+          "type": "string"
+        },
+        "file": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

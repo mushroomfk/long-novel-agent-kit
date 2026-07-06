@@ -1,0 +1,44 @@
+{
+  "facts": [
+    {
+      "kind": "event",
+      "subject": "雾桥暗号",
+      "predicate": "points_to",
+      "object": "银铃送信人",
+      "chapter_range": "5+",
+      "evidence": "雾桥夜市里，河灯纸买主的暗号被卖茶人认出，却只指向一个戴银铃的送信人。"
+    },
+    {
+      "kind": "relationship",
+      "subject": "黎星/秦疏",
+      "predicate": "relation",
+      "object": "盟友",
+      "chapter_range": "5+",
+      "evidence": "黎星仍持有墨钥，秦疏与她保持盟友关系，二人约定先查银铃送信人，不碰钟楼密室。"
+    },
+    {
+      "kind": "location",
+      "subject": "陆衡",
+      "predicate": "location",
+      "object": "钟楼密室",
+      "chapter_range": "5+",
+      "evidence": "陆衡仍被留在钟楼密室外的视线里，不能成为缺页答案。"
+    }
+  ],
+  "characters": [
+    {
+      "name": "秦疏",
+      "state": "与黎星保持盟友关系，不碰钟楼密室。",
+      "evidence": "秦疏与她保持盟友关系，二人约定先查银铃送信人，不碰钟楼密室。"
+    }
+  ],
+  "debts": [
+    {
+      "title": "银铃送信人",
+      "detail": "雾桥暗号只指向戴银铃的送信人，还不知道信封来源。",
+      "status": "open",
+      "evidence": "只指向一个戴银铃的送信人。"
+    }
+  ],
+  "handoff": "第 6 章追查银铃送信人；河灯纸买主还不能确认；秦疏和黎星仍是盟友；陆衡不能进入钟楼密室。"
+}

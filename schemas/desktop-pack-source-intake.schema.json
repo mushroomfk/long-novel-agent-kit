@@ -1,0 +1,346 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://gaoxia.local/long-novel-agent/desktop-pack-source-intake.schema.json",
+  "title": "Long Novel Agent Source Intake",
+  "type": "object",
+  "additionalProperties": true,
+  "required": [
+    "$schema",
+    "version",
+    "type",
+    "project_dir",
+    "agent",
+    "instructions",
+    "sources",
+    "research",
+    "conflicts",
+    "facts"
+  ],
+  "properties": {
+    "$schema": {
+      "type": "string",
+      "minLength": 1
+    },
+    "version": {
+      "type": "string",
+      "minLength": 1
+    },
+    "type": {
+      "const": "source_intake"
+    },
+    "project_dir": {
+      "type": "string",
+      "minLength": 1
+    },
+    "agent": {
+      "$ref": "#/$defs/agent"
+    },
+    "instructions": {
+      "$ref": "#/$defs/stringArray"
+    },
+    "sources": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/sourceEntry"
+      }
+    },
+    "research": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/researchEntry"
+      }
+    },
+    "conflicts": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/conflictEntry"
+      }
+    },
+    "facts": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/factEntry"
+      }
+    }
+  },
+  "$defs": {
+    "stringArray": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "chapterNumber": {
+      "oneOf": [
+        {
+          "type": "null"
+        },
+        {
+          "type": "integer",
+          "minimum": 1
+        },
+        {
+          "type": "string",
+          "pattern": "^$|^[1-9][0-9]*$"
+        }
+      ]
+    },
+    "chapterRange": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      ]
+    },
+    "agent": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": [
+        "platform",
+        "mode"
+      ],
+      "properties": {
+        "platform": {
+          "type": "string",
+          "minLength": 1
+        },
+        "mode": {
+          "enum": [
+            "read-only",
+            "writer"
+          ]
+        },
+        "notes": {
+          "type": "string"
+        }
+      }
+    },
+    "baseEntry": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "enabled": {
+          "type": "boolean"
+        },
+        "title": {
+          "type": "string"
+        },
+        "chapter_range": {
+          "$ref": "#/$defs/chapterRange"
+        },
+        "required_phrases": {
+          "$ref": "#/$defs/stringArray"
+        },
+        "forbidden_phrases": {
+          "$ref": "#/$defs/stringArray"
+        },
+        "reveal_after_chapter": {
+          "$ref": "#/$defs/chapterNumber"
+        }
+      }
+    },
+    "sourceEntry": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/baseEntry"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "source_path": {
+              "type": "string"
+            },
+            "summary": {
+              "type": "string"
+            },
+            "credibility": {
+              "type": "string"
+            }
+          },
+          "if": {
+            "required": [
+              "enabled"
+            ],
+            "properties": {
+              "enabled": {
+                "const": true
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "summary"
+            ]
+          }
+        }
+      ]
+    },
+    "researchEntry": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/baseEntry"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "url": {
+              "type": "string"
+            },
+            "summary": {
+              "type": "string"
+            },
+            "reliability": {
+              "type": "string"
+            }
+          },
+          "if": {
+            "required": [
+              "enabled"
+            ],
+            "properties": {
+              "enabled": {
+                "const": true
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "summary"
+            ]
+          }
+        }
+      ]
+    },
+    "conflictEntry": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/baseEntry"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "conflict": {
+              "type": "string"
+            },
+            "chosen": {
+              "type": "string"
+            },
+            "reason": {
+              "type": "string"
+            },
+            "options": {
+              "$ref": "#/$defs/stringArray"
+            },
+            "scope": {
+              "enum": [
+                "canon",
+                "viewpoint",
+                "range",
+                ""
+              ]
+            },
+            "viewpoint": {
+              "type": "string"
+            },
+            "effective_until_chapter": {
+              "$ref": "#/$defs/chapterNumber"
+            }
+          },
+          "if": {
+            "required": [
+              "enabled"
+            ],
+            "properties": {
+              "enabled": {
+                "const": true
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "conflict",
+              "chosen"
+            ]
+          }
+        }
+      ]
+    },
+    "factEntry": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/baseEntry"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "type": "string"
+            },
+            "subject": {
+              "type": "string"
+            },
+            "predicate": {
+              "type": "string"
+            },
+            "object": {
+              "type": "string"
+            },
+            "object_value": {
+              "type": "string"
+            },
+            "source_ids": {
+              "$ref": "#/$defs/stringArray"
+            },
+            "source_path": {
+              "type": "string"
+            },
+            "confidence": {
+              "type": "string"
+            },
+            "status": {
+              "type": "string"
+            },
+            "future_markers": {
+              "$ref": "#/$defs/stringArray"
+            }
+          },
+          "if": {
+            "required": [
+              "enabled"
+            ],
+            "properties": {
+              "enabled": {
+                "const": true
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "kind",
+              "subject",
+              "predicate"
+            ],
+            "oneOf": [
+              {
+                "required": [
+                  "object"
+                ]
+              },
+              {
+                "required": [
+                  "object_value"
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

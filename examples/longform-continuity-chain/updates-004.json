@@ -1,0 +1,44 @@
+{
+  "facts": [
+    {
+      "kind": "event",
+      "subject": "河灯纸买主",
+      "predicate": "clue",
+      "object": "雾桥暗号",
+      "chapter_range": "4+",
+      "evidence": "纸铺老板只认出买主用过雾桥暗号。"
+    },
+    {
+      "kind": "location",
+      "subject": "黎星",
+      "predicate": "location",
+      "object": "河灯巷纸铺",
+      "chapter_range": "4+",
+      "evidence": "黎星沿着河灯纸买主留下的灰痕回到河灯巷纸铺，纸铺老板只认出买主用过雾桥暗号。"
+    },
+    {
+      "kind": "life_state",
+      "subject": "秦疏",
+      "predicate": "status",
+      "object": "活着",
+      "chapter_range": "4+",
+      "evidence": "秦疏仍活着，守在潮档馆后门，截住追问钟楼密室的人。"
+    }
+  ],
+  "characters": [
+    {
+      "name": "黎星",
+      "state": "查到河灯纸买主使用过雾桥暗号，仍持有墨钥。",
+      "evidence": "纸铺老板只认出买主用过雾桥暗号。"
+    }
+  ],
+  "debts": [
+    {
+      "title": "雾桥暗号",
+      "detail": "河灯纸买主使用过雾桥暗号，下一步去雾桥夜市追查。",
+      "status": "open",
+      "evidence": "纸铺老板只认出买主用过雾桥暗号。"
+    }
+  ],
+  "handoff": "第 5 章去雾桥夜市查雾桥暗号；河灯纸买主仍未确认；墨钥仍归黎星；秦疏活着并保持盟友关系。"
+}

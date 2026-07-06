@@ -1,0 +1,45 @@
+{
+  "facts": [
+    {
+      "kind": "relationship",
+      "subject": "黎星/秦疏",
+      "predicate": "relation",
+      "object": "盟友",
+      "chapter_range": "2+",
+      "evidence": "秦疏与黎星保持盟友关系，二人决定先追查河灯纸灰。"
+    },
+    {
+      "kind": "event",
+      "subject": "河灯纸灰",
+      "predicate": "points_to",
+      "object": "河灯巷纸铺",
+      "chapter_range": "2+",
+      "evidence": "秦疏与黎星保持盟友关系，二人决定先追查河灯纸灰。"
+    },
+    {
+      "kind": "location",
+      "subject": "陆衡",
+      "predicate": "location",
+      "object": "钟楼密室",
+      "chapter_range": "2+",
+      "evidence": "陆衡被目击在钟楼密室外徘徊，却没有进入密室。"
+    }
+  ],
+  "characters": [
+    {
+      "name": "秦疏",
+      "state": "与黎星保持盟友关系，守在潮档馆后门。",
+      "evidence": "秦疏与黎星保持盟友关系，二人决定先追查河灯纸灰。"
+    }
+  ],
+  "debts": [
+    {
+      "title": "河灯纸灰",
+      "detail": "河灯纸灰指向河灯巷纸铺，但买主未明。",
+      "status": "open",
+      "evidence": "秦疏与黎星保持盟友关系，二人决定先追查河灯纸灰。"
+    }
+  ],
+  "handoff": "下一章去河灯巷纸铺追查买主；秦疏和黎星仍是盟友；不要让秦疏离开潮档馆后门去钟楼密室。"
+}
+

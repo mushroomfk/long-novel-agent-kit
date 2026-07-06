@@ -1,0 +1,36 @@
+{
+  "facts": [
+    {
+      "kind": "event",
+      "subject": "河灯纸买主",
+      "predicate": "status",
+      "object": "未查明",
+      "chapter_range": "3+",
+      "evidence": "河灯巷的纸铺老板承认卖过同款河灯纸，但拒绝说出买主。"
+    },
+    {
+      "kind": "life_state",
+      "subject": "秦疏",
+      "predicate": "status",
+      "object": "活着",
+      "chapter_range": "3+",
+      "evidence": "秦疏活着回到潮档馆后门，继续替黎星守住退路。"
+    }
+  ],
+  "characters": [
+    {
+      "name": "秦疏",
+      "state": "活着，仍在潮档馆后门替黎星守退路。",
+      "evidence": "秦疏活着回到潮档馆后门，继续替黎星守住退路。"
+    }
+  ],
+  "debts": [
+    {
+      "title": "河灯纸买主",
+      "detail": "纸铺老板拒绝说出买主，下一章只能追查买主，不能揭示真相。",
+      "status": "open",
+      "evidence": "河灯巷的纸铺老板承认卖过同款河灯纸，但拒绝说出买主。"
+    }
+  ],
+  "handoff": "第 4 章只能追查河灯纸买主；秦疏必须活着；墨钥仍归黎星；不得揭示真相。"
+}

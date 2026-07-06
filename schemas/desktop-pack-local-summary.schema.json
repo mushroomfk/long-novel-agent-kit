@@ -1,0 +1,301 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://long-novel-agent.local/schemas/desktop-pack-local-summary.schema.json",
+  "title": "Long Novel Agent Local Summary",
+  "type": "object",
+  "additionalProperties": true,
+  "required": [
+    "$schema",
+    "ok",
+    "type",
+    "generated_at",
+    "local_only",
+    "requires_server",
+    "would_write_project_state",
+    "would_write_install_config",
+    "would_write_pack_files",
+    "records_real_client_evidence",
+    "status",
+    "headline",
+    "project_dir",
+    "output_dir",
+    "platform",
+    "mode",
+    "tool_profile",
+    "target_chapter",
+    "summary",
+    "cards",
+    "quick_links",
+    "read_first",
+    "commands",
+    "next_actions",
+    "read_errors",
+    "notes"
+  ],
+  "properties": {
+    "$schema": {
+      "const": "local-summary.schema.json"
+    },
+    "ok": {
+      "type": "boolean"
+    },
+    "type": {
+      "const": "desktop_local_summary"
+    },
+    "generated_at": {
+      "type": "string"
+    },
+    "local_only": {
+      "const": true
+    },
+    "requires_server": {
+      "const": false
+    },
+    "would_write_project_state": {
+      "const": false
+    },
+    "would_write_install_config": {
+      "const": false
+    },
+    "would_write_pack_files": {
+      "const": false
+    },
+    "records_real_client_evidence": {
+      "const": false
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "needs_pack_repair",
+        "needs_initialization",
+        "needs_fresh_pack",
+        "needs_author_review",
+        "needs_real_client_evidence",
+        "ready_with_warnings",
+        "ready_to_start"
+      ]
+    },
+    "headline": {
+      "type": "string"
+    },
+    "project_dir": {
+      "type": ["string", "null"]
+    },
+    "output_dir": {
+      "type": ["string", "null"]
+    },
+    "platform": {
+      "type": ["string", "null"]
+    },
+    "mode": {
+      "type": ["string", "null"]
+    },
+    "tool_profile": {
+      "type": ["string", "null"]
+    },
+    "target_chapter": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "summary": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": [
+        "project_readiness",
+        "desktop_next_step_status",
+        "desktop_pack_readiness_status",
+        "pack_freshness_status",
+        "chapter_session_freshness_status",
+        "author_review_queue_status",
+        "desktop_evidence_review_status",
+        "blocker_count",
+        "warning_count"
+      ],
+      "properties": {
+        "blocker_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "warning_count": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "cards": {
+      "type": "array",
+      "minItems": 6,
+      "items": {
+        "$ref": "#/$defs/card"
+      }
+    },
+    "quick_links": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/quickLink"
+      }
+    },
+    "read_first": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string"
+      }
+    },
+    "commands": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/commandRef"
+      }
+    },
+    "next_actions": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string"
+      }
+    },
+    "read_errors": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": true
+      }
+    },
+    "notes": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "source": {
+      "type": "string"
+    },
+    "pack_dir": {
+      "type": "string"
+    }
+  },
+  "$defs": {
+    "card": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": ["id", "label", "status", "message", "severity", "command_key", "file", "detail"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "label": {
+          "type": "string",
+          "minLength": 1
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1
+        },
+        "status": {
+          "type": "string",
+          "minLength": 1
+        },
+        "message": {
+          "type": "string",
+          "minLength": 1
+        },
+        "severity": {
+          "type": "string",
+          "enum": ["info", "warning", "blocker"]
+        },
+        "command_key": {
+          "type": "string"
+        },
+        "file": {
+          "type": "string"
+        },
+        "detail": {
+          "type": "object",
+          "additionalProperties": true
+        }
+      }
+    },
+    "quickLink": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": [
+        "id",
+        "label",
+        "description",
+        "kind",
+        "href",
+        "file",
+        "recommended",
+        "writes_project_state",
+        "writes_install_config",
+        "writes_pack_files",
+        "records_real_client_evidence"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "label": {
+          "type": "string",
+          "minLength": 1
+        },
+        "description": {
+          "type": "string",
+          "minLength": 1
+        },
+        "kind": {
+          "type": "string",
+          "enum": ["file", "html"]
+        },
+        "href": {
+          "type": "string",
+          "minLength": 1
+        },
+        "file": {
+          "type": "string",
+          "minLength": 1
+        },
+        "command_key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "recommended": {
+          "type": "boolean"
+        },
+        "writes_project_state": {
+          "const": false
+        },
+        "writes_install_config": {
+          "const": false
+        },
+        "writes_pack_files": {
+          "const": false
+        },
+        "records_real_client_evidence": {
+          "const": false
+        }
+      }
+    },
+    "commandRef": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": ["key", "present", "command"],
+      "properties": {
+        "key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "present": {
+          "type": "boolean"
+        },
+        "command": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

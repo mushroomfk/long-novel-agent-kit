@@ -1,0 +1,277 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://gaoxia.local/long-novel-agent/desktop-pack-commands.schema.json",
+  "title": "Long Novel Agent Desktop Pack Commands",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "$schema",
+    "type",
+    "generated_at",
+    "project_dir",
+    "platform",
+    "mode",
+    "target_chapter",
+    "output_dir",
+    "command_count",
+    "commands",
+    "by_key",
+    "groups",
+    "by_stage",
+    "write_scope_counts",
+    "safety_notes"
+  ],
+  "properties": {
+    "$schema": {
+      "type": "string",
+      "minLength": 1
+    },
+    "type": {
+      "const": "desktop_pack_commands"
+    },
+    "generated_at": {
+      "type": "string",
+      "minLength": 1
+    },
+    "project_dir": {
+      "type": "string",
+      "minLength": 1
+    },
+    "platform": {
+      "type": "string",
+      "minLength": 1
+    },
+    "mode": {
+      "enum": [
+        "read-only",
+        "writer"
+      ]
+    },
+    "target_chapter": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "output_dir": {
+      "type": "string",
+      "minLength": 1
+    },
+    "command_count": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "commands": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/command"
+      }
+    },
+    "by_key": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string"
+      }
+    },
+    "groups": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/commandGroup"
+      }
+    },
+    "by_stage": {
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "#/$defs/stringList"
+      }
+    },
+    "write_scope_counts": {
+      "$ref": "#/$defs/writeScopeCounts"
+    },
+    "safety_notes": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    }
+  },
+  "$defs": {
+    "stringList": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "commandGroup": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "title",
+        "purpose",
+        "read_first",
+        "command_count",
+        "command_keys",
+        "writes_project_state",
+        "writes_install_config",
+        "writes_pack_files",
+        "requires_review",
+        "requires_author_confirmation"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_]*$"
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1
+        },
+        "purpose": {
+          "type": "string",
+          "minLength": 1
+        },
+        "read_first": {
+          "$ref": "#/$defs/stringList"
+        },
+        "command_count": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "command_keys": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9_]*$"
+          }
+        },
+        "writes_project_state": {
+          "type": "boolean"
+        },
+        "writes_install_config": {
+          "type": "boolean"
+        },
+        "writes_pack_files": {
+          "type": "boolean"
+        },
+        "requires_review": {
+          "type": "boolean"
+        },
+        "requires_author_confirmation": {
+          "type": "boolean"
+        }
+      }
+    },
+    "writeScopeCounts": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "read_only",
+        "writes_project_state",
+        "writes_install_config",
+        "writes_pack_files",
+        "requires_review",
+        "requires_author_confirmation"
+      ],
+      "properties": {
+        "read_only": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "writes_project_state": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "writes_install_config": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "writes_pack_files": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "requires_review": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "requires_author_confirmation": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "command": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "key",
+        "command",
+        "stage",
+        "title",
+        "writes_project_state",
+        "writes_install_config",
+        "writes_pack_files",
+        "requires_review",
+        "requires_author_confirmation",
+        "input_files",
+        "output_files",
+        "notes"
+      ],
+      "properties": {
+        "key": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_]*$"
+        },
+        "command": {
+          "type": "string",
+          "minLength": 1
+        },
+        "stage": {
+          "enum": [
+            "install",
+            "verify",
+            "initialize",
+            "source_intake",
+            "evidence",
+            "writing",
+            "writer_mode",
+            "maintenance",
+            "pack",
+            "other"
+          ]
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1
+        },
+        "writes_project_state": {
+          "type": "boolean"
+        },
+        "writes_install_config": {
+          "type": "boolean"
+        },
+        "writes_pack_files": {
+          "type": "boolean"
+        },
+        "requires_review": {
+          "type": "boolean"
+        },
+        "requires_author_confirmation": {
+          "type": "boolean"
+        },
+        "input_files": {
+          "$ref": "#/$defs/stringList"
+        },
+        "output_files": {
+          "$ref": "#/$defs/stringList"
+        },
+        "notes": {
+          "$ref": "#/$defs/stringList"
+        }
+      }
+    }
+  }
+}

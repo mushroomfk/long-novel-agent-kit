@@ -1,0 +1,197 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://long-novel-agent.local/schemas/desktop-pack-agent-takeover.schema.json",
+  "title": "Long Novel Agent Takeover Packet",
+  "type": "object",
+  "additionalProperties": true,
+  "required": [
+    "$schema",
+    "ok",
+    "type",
+    "generated_at",
+    "local_only",
+    "requires_server",
+    "would_write_project_state",
+    "would_write_install_config",
+    "would_write_pack_files",
+    "records_real_client_evidence",
+    "project_dir",
+    "platform",
+    "mode",
+    "target_chapter",
+    "status",
+    "can_draft",
+    "can_write_durable_state",
+    "summary",
+    "first_read",
+    "draft_gate",
+    "write_boundaries",
+    "handoff",
+    "commands",
+    "next_actions",
+    "source_files"
+  ],
+  "properties": {
+    "$schema": {
+      "const": "agent-takeover.schema.json"
+    },
+    "ok": {
+      "type": "boolean"
+    },
+    "type": {
+      "const": "agent_takeover"
+    },
+    "generated_at": {
+      "type": "string"
+    },
+    "local_only": {
+      "const": true
+    },
+    "requires_server": {
+      "const": false
+    },
+    "would_write_project_state": {
+      "const": false
+    },
+    "would_write_install_config": {
+      "const": false
+    },
+    "would_write_pack_files": {
+      "const": false
+    },
+    "records_real_client_evidence": {
+      "const": false
+    },
+    "project_dir": {
+      "type": ["string", "null"]
+    },
+    "output_dir": {
+      "type": ["string", "null"]
+    },
+    "platform": {
+      "type": ["string", "null"]
+    },
+    "mode": {
+      "type": ["string", "null"]
+    },
+    "target_chapter": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "ready_to_draft",
+        "ready_with_review_items",
+        "ready_for_read_only_start",
+        "needs_author_review",
+        "needs_continuity_fix",
+        "needs_initialization",
+        "needs_pack_repair"
+      ]
+    },
+    "can_draft": {
+      "type": "boolean"
+    },
+    "can_write_durable_state": {
+      "const": false
+    },
+    "summary": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": [
+        "project_readiness",
+        "chapter_session_status",
+        "handoff_brief_status",
+        "desktop_pack_readiness_status",
+        "chapter_session_freshness_status",
+        "author_review_queue_status",
+        "continuity_must_fix",
+        "continuity_review"
+      ]
+    },
+    "first_read": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": true,
+        "required": ["file", "why"],
+        "properties": {
+          "file": {
+            "type": "string"
+          },
+          "why": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "draft_gate": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": [
+        "can_draft",
+        "blockers",
+        "review_items",
+        "requires_chapter_context",
+        "required_context_file"
+      ],
+      "properties": {
+        "can_draft": {
+          "type": "boolean"
+        },
+        "blockers": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "review_items": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "requires_chapter_context": {
+          "const": true
+        },
+        "required_context_file": {
+          "const": "chapter-session.json"
+        }
+      }
+    },
+    "write_boundaries": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": [
+        "agent_takeover_is_read_only",
+        "do_not_write_project_state_from_this_file",
+        "read_only_agents_must_not_execute",
+        "writer_actions_need_author_confirmation",
+        "real_gui_evidence_is_separate_from_local_cli_checks",
+        "remote_connector_only_platforms_are_outside_this_pack"
+      ]
+    },
+    "handoff": {
+      "type": "object",
+      "additionalProperties": true
+    },
+    "commands": {
+      "type": "object",
+      "additionalProperties": true
+    },
+    "next_actions": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "source_files": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  }
+}

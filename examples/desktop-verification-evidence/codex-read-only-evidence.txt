@@ -1,0 +1,8 @@
+desktop-verify completed for codex read-only config; OK: True; local stdio MCP listed long-novel-agent tools and prepare_chapter_session returned chapter_session_packet.
+Codex Desktop client restarted after MCP config change; MCP server list refreshed without startup error.
+Desktop client tool list showed long-novel-agent read tools: prepare_chapter_session, build_chapter_context, build_chapter_readiness, build_chapter_range_readiness, build_proposal_readiness, check_chapter, doctor.
+prepare_chapter_session for chapter 2 returned target_chapter=2, chapter_session_packet, handoff status, and chapter-safe workflow gates.
+build_chapter_context for chapter 2 returned visible rules, previous chapter tail, sources, facts, debts, and contracts.
+Before ready, the desktop agent stated that check_chapter and diff_chapter_contract must be called before presenting a draft as ready.
+build_chapter_range_readiness for chapters 1-2 returned type=chapter_range_readiness, status=ready_with_notes, problem_chapters=[].
+Read-only mode write tools hidden: tool list did not expose record_chapter or apply_after_write_updates.

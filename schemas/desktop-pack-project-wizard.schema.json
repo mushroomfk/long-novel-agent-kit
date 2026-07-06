@@ -1,0 +1,236 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://gaoxia.local/long-novel-agent/desktop-pack-project-wizard.schema.json",
+  "title": "Long Novel Agent Project Wizard",
+  "type": "object",
+  "additionalProperties": true,
+  "required": [
+    "$schema",
+    "version",
+    "project_dir",
+    "project",
+    "agent",
+    "rules",
+    "source_material",
+    "install",
+    "options",
+    "instructions"
+  ],
+  "properties": {
+    "$schema": {
+      "type": "string",
+      "minLength": 1
+    },
+    "version": {
+      "type": "string",
+      "minLength": 1
+    },
+    "project_dir": {
+      "type": "string",
+      "minLength": 1
+    },
+    "project": {
+      "$ref": "#/$defs/project"
+    },
+    "agent": {
+      "$ref": "#/$defs/agent"
+    },
+    "rules": {
+      "$ref": "#/$defs/rules"
+    },
+    "source_material": {
+      "$ref": "#/$defs/sourceMaterial"
+    },
+    "install": {
+      "$ref": "#/$defs/install"
+    },
+    "options": {
+      "$ref": "#/$defs/options"
+    },
+    "instructions": {
+      "$ref": "#/$defs/stringArray"
+    }
+  },
+  "$defs": {
+    "stringArray": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "positiveIntegerOrString": {
+      "oneOf": [
+        {
+          "type": "integer",
+          "minimum": 1
+        },
+        {
+          "type": "string",
+          "pattern": "^[1-9][0-9]*$"
+        }
+      ]
+    },
+    "nullablePositiveIntegerOrString": {
+      "oneOf": [
+        {
+          "type": "null"
+        },
+        {
+          "$ref": "#/$defs/positiveIntegerOrString"
+        },
+        {
+          "type": "string",
+          "const": ""
+        }
+      ]
+    },
+    "project": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": [
+        "title",
+        "target_chapters",
+        "target_words",
+        "source_mode",
+        "first_chapter"
+      ],
+      "properties": {
+        "title": {
+          "type": "string"
+        },
+        "target_chapters": {
+          "$ref": "#/$defs/positiveIntegerOrString"
+        },
+        "target_words": {
+          "$ref": "#/$defs/nullablePositiveIntegerOrString"
+        },
+        "source_mode": {
+          "enum": [
+            "auto",
+            "init",
+            "import-gaoxia"
+          ]
+        },
+        "first_chapter": {
+          "$ref": "#/$defs/positiveIntegerOrString"
+        }
+      }
+    },
+    "agent": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": [
+        "id",
+        "platform",
+        "mode",
+        "capabilities",
+        "notes"
+      ],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "platform": {
+          "type": "string",
+          "minLength": 1
+        },
+        "mode": {
+          "enum": [
+            "read-only",
+            "writer"
+          ]
+        },
+        "capabilities": {
+          "$ref": "#/$defs/stringArray"
+        },
+        "notes": {
+          "type": "string"
+        }
+      }
+    },
+    "rules": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": [
+        "required_phrases",
+        "forbidden_phrases",
+        "future_markers",
+        "notes",
+        "style_note"
+      ],
+      "properties": {
+        "required_phrases": {
+          "$ref": "#/$defs/stringArray"
+        },
+        "forbidden_phrases": {
+          "$ref": "#/$defs/stringArray"
+        },
+        "future_markers": {
+          "$ref": "#/$defs/stringArray"
+        },
+        "notes": {
+          "$ref": "#/$defs/stringArray"
+        },
+        "style_note": {
+          "type": "string"
+        }
+      }
+    },
+    "sourceMaterial": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": [
+        "summary",
+        "path",
+        "chapter_range"
+      ],
+      "properties": {
+        "summary": {
+          "type": "string"
+        },
+        "path": {
+          "type": "string"
+        },
+        "chapter_range": {
+          "type": "string"
+        }
+      }
+    },
+    "install": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": [
+        "config_path",
+        "start_mcp_test"
+      ],
+      "properties": {
+        "config_path": {
+          "type": "string"
+        },
+        "start_mcp_test": {
+          "type": "boolean"
+        }
+      }
+    },
+    "options": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": [
+        "append_import",
+        "force",
+        "summary_only"
+      ],
+      "properties": {
+        "append_import": {
+          "type": "boolean"
+        },
+        "force": {
+          "type": "boolean"
+        },
+        "summary_only": {
+          "type": "boolean"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,250 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://gaoxia.local/long-novel-agent/proposal.schema.json",
+  "title": "Long Novel Agent Post-Write Proposal",
+  "type": "object",
+  "additionalProperties": true,
+  "properties": {
+    "chapter": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "file": {
+      "type": "string"
+    },
+    "facts": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/factUpdate"
+      },
+      "default": []
+    },
+    "characters": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/characterUpdate"
+      },
+      "default": []
+    },
+    "debts": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/debtUpdate"
+      },
+      "default": []
+    },
+    "handoff": {
+      "type": "string"
+    },
+    "notes": {
+      "type": "string"
+    }
+  },
+  "$defs": {
+    "stringList": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      ]
+    },
+    "evidence": {
+      "oneOf": [
+        {
+          "type": "string",
+          "minLength": 1
+        },
+        {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 1
+        }
+      ]
+    },
+    "factUpdate": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": [
+        "subject",
+        "predicate",
+        "evidence"
+      ],
+      "oneOf": [
+        {
+          "required": [
+            "object"
+          ]
+        },
+        {
+          "required": [
+            "object_value"
+          ]
+        }
+      ],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "kind": {
+          "type": "string",
+          "default": "fact"
+        },
+        "subject": {
+          "type": "string",
+          "minLength": 1
+        },
+        "predicate": {
+          "type": "string",
+          "minLength": 1
+        },
+        "object": {
+          "type": "string",
+          "minLength": 1
+        },
+        "object_value": {
+          "type": "string",
+          "minLength": 1
+        },
+        "chapter_range": {
+          "$ref": "#/$defs/stringList"
+        },
+        "chapter_ranges": {
+          "$ref": "#/$defs/stringList"
+        },
+        "source_ids": {
+          "$ref": "#/$defs/stringList"
+        },
+        "source_path": {
+          "type": "string"
+        },
+        "confidence": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string"
+        },
+        "evidence": {
+          "$ref": "#/$defs/evidence"
+        },
+        "required_phrases": {
+          "$ref": "#/$defs/stringList"
+        },
+        "forbidden_phrases": {
+          "$ref": "#/$defs/stringList"
+        },
+        "future_markers": {
+          "$ref": "#/$defs/stringList"
+        }
+      }
+    },
+    "characterUpdate": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": [
+        "evidence"
+      ],
+      "oneOf": [
+        {
+          "required": [
+            "name"
+          ]
+        },
+        {
+          "required": [
+            "character"
+          ]
+        },
+        {
+          "required": [
+            "title"
+          ]
+        }
+      ],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "character": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        },
+        "state": {
+          "type": "string"
+        },
+        "current_state": {
+          "type": "string"
+        },
+        "summary": {
+          "type": "string"
+        },
+        "evidence": {
+          "$ref": "#/$defs/evidence"
+        }
+      }
+    },
+    "debtUpdate": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": [
+        "evidence"
+      ],
+      "oneOf": [
+        {
+          "required": [
+            "id"
+          ]
+        },
+        {
+          "required": [
+            "title"
+          ]
+        },
+        {
+          "required": [
+            "debt_content"
+          ]
+        }
+      ],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        },
+        "debt_content": {
+          "type": "string"
+        },
+        "detail": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string"
+        },
+        "risk_level": {
+          "type": "string"
+        },
+        "expected_payoff_range": {
+          "$ref": "#/$defs/stringList"
+        },
+        "evidence": {
+          "$ref": "#/$defs/evidence"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,243 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://long-novel-agent.local/schemas/desktop-pack-troubleshooting.schema.json",
+  "title": "Long Novel Agent Desktop Pack Troubleshooting",
+  "type": "object",
+  "additionalProperties": true,
+  "required": [
+    "$schema",
+    "ok",
+    "type",
+    "generated_at",
+    "local_only",
+    "requires_server",
+    "would_write_project_state",
+    "would_write_install_config",
+    "would_write_pack_files",
+    "records_real_client_evidence",
+    "project_dir",
+    "output_dir",
+    "platform",
+    "mode",
+    "target_chapter",
+    "result_file",
+    "first_checks",
+    "symptoms",
+    "when_to_regenerate",
+    "write_boundaries",
+    "source_files"
+  ],
+  "properties": {
+    "$schema": {
+      "const": "troubleshooting.schema.json"
+    },
+    "ok": {
+      "type": "boolean"
+    },
+    "type": {
+      "const": "desktop_pack_troubleshooting"
+    },
+    "generated_at": {
+      "type": "string",
+      "minLength": 1
+    },
+    "local_only": {
+      "const": true
+    },
+    "requires_server": {
+      "const": false
+    },
+    "would_write_project_state": {
+      "const": false
+    },
+    "would_write_install_config": {
+      "const": false
+    },
+    "would_write_pack_files": {
+      "const": false
+    },
+    "records_real_client_evidence": {
+      "const": false
+    },
+    "project_dir": {
+      "type": ["string", "null"]
+    },
+    "output_dir": {
+      "type": ["string", "null"]
+    },
+    "platform": {
+      "type": ["string", "null"]
+    },
+    "mode": {
+      "type": ["string", "null"]
+    },
+    "target_chapter": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "config_path": {
+      "type": "string"
+    },
+    "result_file": {
+      "type": "string",
+      "minLength": 1
+    },
+    "first_checks": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/firstCheck"
+      }
+    },
+    "symptoms": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/symptom"
+      }
+    },
+    "when_to_regenerate": {
+      "$ref": "#/$defs/stringArray"
+    },
+    "write_boundaries": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": [
+        "troubleshooting_is_read_only",
+        "do_not_write_project_state_from_this_file",
+        "do_not_write_install_config_from_this_file",
+        "do_not_record_real_client_evidence_from_this_file",
+        "read_only_agents_must_not_execute",
+        "writer_actions_need_author_confirmation",
+        "real_gui_evidence_is_separate_from_local_cli_checks",
+        "remote_connector_only_platforms"
+      ],
+      "properties": {
+        "troubleshooting_is_read_only": {
+          "const": true
+        },
+        "do_not_write_project_state_from_this_file": {
+          "const": true
+        },
+        "do_not_write_install_config_from_this_file": {
+          "const": true
+        },
+        "do_not_record_real_client_evidence_from_this_file": {
+          "const": true
+        },
+        "read_only_agents_must_not_execute": {
+          "$ref": "#/$defs/stringArray"
+        },
+        "writer_actions_need_author_confirmation": {
+          "const": true
+        },
+        "real_gui_evidence_is_separate_from_local_cli_checks": {
+          "const": true
+        },
+        "remote_connector_only_platforms": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "source_files": {
+      "$ref": "#/$defs/stringArray"
+    }
+  },
+  "$defs": {
+    "stringArray": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "commandRef": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": ["key", "present"],
+      "properties": {
+        "key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "present": {
+          "type": "boolean"
+        },
+        "command": {
+          "type": "string"
+        }
+      }
+    },
+    "firstCheck": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": ["id", "read", "why"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "read": {
+          "$ref": "#/$defs/stringArray"
+        },
+        "why": {
+          "type": "string",
+          "minLength": 1
+        },
+        "command": {
+          "$ref": "#/$defs/commandRef"
+        }
+      }
+    },
+    "symptom": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": [
+        "id",
+        "title",
+        "severity",
+        "summary",
+        "read_first",
+        "actions",
+        "commands",
+        "do_not",
+        "regenerate_pack_after_fix"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1
+        },
+        "severity": {
+          "enum": ["info", "warning", "blocker"]
+        },
+        "summary": {
+          "type": "string",
+          "minLength": 1
+        },
+        "read_first": {
+          "$ref": "#/$defs/stringArray"
+        },
+        "actions": {
+          "$ref": "#/$defs/stringArray"
+        },
+        "commands": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/commandRef"
+          }
+        },
+        "do_not": {
+          "$ref": "#/$defs/stringArray"
+        },
+        "regenerate_pack_after_fix": {
+          "type": "boolean"
+        }
+      }
+    }
+  }
+}

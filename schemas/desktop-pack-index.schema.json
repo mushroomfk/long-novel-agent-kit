@@ -1,0 +1,357 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://gaoxia.local/long-novel-agent/desktop-pack-index.schema.json",
+  "title": "Long Novel Agent Desktop Pack Index",
+  "type": "object",
+  "additionalProperties": true,
+  "required": [
+    "$schema",
+    "type",
+    "version",
+    "generated_at",
+    "kit_version",
+    "local_only",
+    "requires_server",
+    "writes_project_state",
+    "writes_install_config",
+    "records_real_client_evidence",
+    "project",
+    "status",
+    "entrypoints",
+    "startup_order",
+    "machine_files",
+    "commands",
+    "write_boundaries",
+    "files"
+  ],
+  "properties": {
+    "$schema": {
+      "type": "string",
+      "minLength": 1
+    },
+    "type": {
+      "const": "desktop_pack_index"
+    },
+    "version": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "generated_at": {
+      "type": "string",
+      "minLength": 1
+    },
+    "kit_version": {
+      "type": "string",
+      "minLength": 1
+    },
+    "local_only": {
+      "const": true
+    },
+    "requires_server": {
+      "const": false
+    },
+    "writes_project_state": {
+      "const": false
+    },
+    "writes_install_config": {
+      "const": false
+    },
+    "records_real_client_evidence": {
+      "const": false
+    },
+    "project": {
+      "$ref": "#/$defs/project"
+    },
+    "status": {
+      "type": "object",
+      "additionalProperties": true
+    },
+    "entrypoints": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/fileRef"
+      }
+    },
+    "startup_order": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/startupStep"
+      }
+    },
+    "machine_files": {
+      "$ref": "#/$defs/machineFiles"
+    },
+    "commands": {
+      "$ref": "#/$defs/commands"
+    },
+    "write_boundaries": {
+      "$ref": "#/$defs/writeBoundaries"
+    },
+    "files": {
+      "$ref": "#/$defs/files"
+    },
+    "notes": {
+      "$ref": "#/$defs/stringArray"
+    }
+  },
+  "$defs": {
+    "stringArray": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "project": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": [
+        "project_dir",
+        "output_dir",
+        "platform",
+        "mode",
+        "target_chapter",
+        "result_file"
+      ],
+      "properties": {
+        "project_dir": {
+          "type": "string",
+          "minLength": 1
+        },
+        "output_dir": {
+          "type": "string",
+          "minLength": 1
+        },
+        "platform": {
+          "type": "string",
+          "minLength": 1
+        },
+        "mode": {
+          "enum": [
+            "read-only",
+            "writer"
+          ]
+        },
+        "target_chapter": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "result_file": {
+          "type": "string",
+          "minLength": 1
+        },
+        "config_path": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "install_target": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      }
+    },
+    "fileRef": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": [
+        "name",
+        "role",
+        "present",
+        "required"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "role": {
+          "type": "string",
+          "minLength": 1
+        },
+        "present": {
+          "type": "boolean"
+        },
+        "required": {
+          "type": "boolean"
+        },
+        "description": {
+          "type": "string"
+        }
+      }
+    },
+    "startupStep": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": [
+        "step",
+        "read",
+        "purpose"
+      ],
+      "properties": {
+        "step": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "read": {
+          "type": "string",
+          "minLength": 1
+        },
+        "purpose": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "machineFiles": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": [
+        "navigation",
+        "status",
+        "schemas",
+        "integrity"
+      ],
+      "properties": {
+        "navigation": {
+          "$ref": "#/$defs/fileRefArray"
+        },
+        "status": {
+          "$ref": "#/$defs/fileRefArray"
+        },
+        "schemas": {
+          "$ref": "#/$defs/fileRefArray"
+        },
+        "integrity": {
+          "$ref": "#/$defs/fileRefArray"
+        }
+      }
+    },
+    "fileRefArray": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/fileRef"
+      }
+    },
+    "commands": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": [
+        "total",
+        "important"
+      ],
+      "properties": {
+        "total": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "important": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/commandRef"
+          }
+        }
+      }
+    },
+    "commandRef": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": [
+        "key",
+        "present"
+      ],
+      "properties": {
+        "key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "present": {
+          "type": "boolean"
+        },
+        "stage": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        },
+        "writes_project_state": {
+          "type": "boolean"
+        },
+        "writes_install_config": {
+          "type": "boolean"
+        },
+        "writes_pack_files": {
+          "type": "boolean"
+        },
+        "requires_review": {
+          "type": "boolean"
+        },
+        "requires_author_confirmation": {
+          "type": "boolean"
+        },
+        "input_files": {
+          "$ref": "#/$defs/stringArray"
+        },
+        "output_files": {
+          "$ref": "#/$defs/stringArray"
+        },
+        "command": {
+          "type": "string"
+        }
+      }
+    },
+    "writeBoundaries": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": [
+        "pack_index_is_read_only",
+        "read_only_is_recommended_first_mode",
+        "read_only_agents_must_not_execute",
+        "writer_actions_need_author_confirmation",
+        "real_gui_evidence_is_separate_from_local_cli_checks",
+        "remote_connector_only_platforms_are_outside_this_pack"
+      ],
+      "properties": {
+        "pack_index_is_read_only": {
+          "const": true
+        },
+        "read_only_is_recommended_first_mode": {
+          "type": "boolean"
+        },
+        "read_only_agents_must_not_execute": {
+          "$ref": "#/$defs/stringArray"
+        },
+        "writer_actions_need_author_confirmation": {
+          "type": "boolean"
+        },
+        "real_gui_evidence_is_separate_from_local_cli_checks": {
+          "type": "boolean"
+        },
+        "remote_connector_only_platforms_are_outside_this_pack": {
+          "type": "boolean"
+        }
+      }
+    },
+    "files": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": [
+        "total",
+        "present"
+      ],
+      "properties": {
+        "total": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "present": {
+          "$ref": "#/$defs/stringArray"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,39 @@
+{
+  "debts": [
+    {
+      "id": "debt-key",
+      "title": "铜钥匙伏笔",
+      "detail": "铜钥匙还不能交给白石商会。",
+      "status": "open",
+      "source_chapters": [1]
+    }
+  ],
+  "character_arcs": [
+    {
+      "id": "arc-linzui",
+      "character": "林追",
+      "current_state": "隐藏身份，继续追查旧仓库。",
+      "required_next_check": "主动暴露身份",
+      "source_chapters": [1]
+    }
+  ],
+  "chapter_contracts": [
+    {
+      "id": "contract-2",
+      "target_chapter_index": 2,
+      "objective": "进入旧仓库并发现账册缺页。",
+      "required_beats": ["旧仓库", "账册缺页"],
+      "forbidden_moves": ["主动暴露身份"],
+      "status": "open"
+    }
+  ],
+  "chapter_cards": [
+    {
+      "id": "card-2",
+      "chapter_index": 2,
+      "title": "第二章任务卡",
+      "required_phrases": ["旧仓库"],
+      "forbidden_phrases": ["主动暴露身份"]
+    }
+  ]
+}

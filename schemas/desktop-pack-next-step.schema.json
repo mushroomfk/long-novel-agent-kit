@@ -1,0 +1,221 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://gaoxia.local/long-novel-agent/desktop-pack-next-step.schema.json",
+  "title": "Long Novel Agent Desktop Next Step",
+  "type": "object",
+  "additionalProperties": true,
+  "required": [
+    "$schema",
+    "ok",
+    "type",
+    "generated_at",
+    "local_only",
+    "requires_server",
+    "would_write_project_state",
+    "would_write_install_config",
+    "would_write_pack_files",
+    "records_real_client_evidence",
+    "platform",
+    "mode",
+    "tool_profile",
+    "project_dir",
+    "target_chapter",
+    "status",
+    "primary_action",
+    "actions",
+    "state_initialized",
+    "verification_status",
+    "recommended_commands",
+    "notes"
+  ],
+  "properties": {
+    "$schema": {
+      "const": "desktop-next-step.schema.json"
+    },
+    "ok": {
+      "type": "boolean"
+    },
+    "type": {
+      "const": "desktop_next_step"
+    },
+    "generated_at": {
+      "type": "string",
+      "minLength": 1
+    },
+    "local_only": {
+      "const": true
+    },
+    "requires_server": {
+      "const": false
+    },
+    "would_write_project_state": {
+      "const": false
+    },
+    "would_write_install_config": {
+      "const": false
+    },
+    "would_write_pack_files": {
+      "const": false
+    },
+    "records_real_client_evidence": {
+      "const": false
+    },
+    "platform": {
+      "type": "string",
+      "minLength": 1
+    },
+    "mode": {
+      "enum": [
+        "read-only",
+        "writer"
+      ]
+    },
+    "tool_profile": {
+      "enum": [
+        "core",
+        "writing",
+        "full"
+      ]
+    },
+    "project_dir": {
+      "type": "string",
+      "minLength": 1
+    },
+    "target_chapter": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "config_path": {
+      "type": "string"
+    },
+    "status": {
+      "enum": [
+        "needs_install_config",
+        "needs_local_install",
+        "needs_project_initialization",
+        "needs_author_review",
+        "writer_mode_needs_evidence",
+        "needs_real_client_evidence",
+        "blocked",
+        "needs_review",
+        "ready_for_chapter_session"
+      ]
+    },
+    "primary_action": {
+      "$ref": "#/$defs/action"
+    },
+    "actions": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/action"
+      }
+    },
+    "state_initialized": {
+      "type": "boolean"
+    },
+    "setup_verification": {
+      "type": "object"
+    },
+    "project_status": {
+      "type": "object"
+    },
+    "author_review_queue": {
+      "type": "object"
+    },
+    "verification_status": {
+      "$ref": "#/$defs/verificationStatus"
+    },
+    "chapter_session": {
+      "type": "object"
+    },
+    "recommended_commands": {
+      "$ref": "#/$defs/stringArray"
+    },
+    "notes": {
+      "$ref": "#/$defs/stringArray"
+    }
+  },
+  "$defs": {
+    "stringArray": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "action": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": [
+        "id",
+        "title",
+        "reason",
+        "command",
+        "file",
+        "writes_project_state",
+        "writes_install_config",
+        "writes_pack_files",
+        "records_real_client_evidence",
+        "requires_author_confirmation",
+        "requires_review"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1
+        },
+        "reason": {
+          "type": "string",
+          "minLength": 1
+        },
+        "command": {
+          "type": "string"
+        },
+        "file": {
+          "type": "string"
+        },
+        "writes_project_state": {
+          "type": "boolean"
+        },
+        "writes_install_config": {
+          "type": "boolean"
+        },
+        "writes_pack_files": {
+          "type": "boolean"
+        },
+        "records_real_client_evidence": {
+          "type": "boolean"
+        },
+        "requires_author_confirmation": {
+          "type": "boolean"
+        },
+        "requires_review": {
+          "type": "boolean"
+        }
+      }
+    },
+    "verificationStatus": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": [
+        "local_mcp_config",
+        "real_desktop_client",
+        "selected_platform_mode"
+      ],
+      "properties": {
+        "local_mcp_config": {
+          "type": "object"
+        },
+        "real_desktop_client": {
+          "type": "object"
+        },
+        "selected_platform_mode": {
+          "type": "object"
+        }
+      }
+    }
+  }
+}

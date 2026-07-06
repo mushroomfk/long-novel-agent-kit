@@ -1,0 +1,52 @@
+{
+  "checks": [
+    {
+      "id": "local_config_preflight",
+      "status": "passed",
+      "evidence": "ok",
+      "notes": "Negative sample: this evidence is intentionally too generic and must be rejected."
+    },
+    {
+      "id": "client_restart",
+      "status": "passed",
+      "evidence": "Codex Desktop was restarted after config change; MCP server list refreshed without startup error.",
+      "notes": "Client version redacted."
+    },
+    {
+      "id": "server_visible",
+      "status": "passed",
+      "evidence": "Desktop client tool list showed long-novel-agent read tools: prepare_chapter_session, build_chapter_context, build_chapter_readiness, build_chapter_range_readiness, build_proposal_readiness, check_chapter, doctor.",
+      "notes": "Copied from tool list, not a screenshot."
+    },
+    {
+      "id": "read_path_prepare_session",
+      "status": "passed",
+      "evidence": "prepare_chapter_session for chapter 2 returned target_chapter=2, workflow gates, handoff status, and chapter-safe context summary.",
+      "notes": "Only summary copied."
+    },
+    {
+      "id": "context_gate",
+      "status": "passed",
+      "evidence": "build_chapter_context for chapter 2 returned visible rules, previous chapter tail, sources, facts, debts, and contracts.",
+      "notes": "No manuscript text included."
+    },
+    {
+      "id": "ready_check_gate",
+      "status": "passed",
+      "evidence": "Desktop agent stated that check_chapter and diff_chapter_contract must be called before presenting a draft as ready.",
+      "notes": "Agent response was copied in summary form."
+    },
+    {
+      "id": "range_readiness_gate",
+      "status": "passed",
+      "evidence": "Desktop agent called build_chapter_range_readiness for chapters 1-2 and returned type=chapter_range_readiness, status=ready_with_notes, problem_chapters=[].",
+      "notes": "Only the status summary was copied."
+    },
+    {
+      "id": "write_tools_hidden",
+      "status": "passed",
+      "evidence": "Read-only tool list did not expose record_chapter, apply_after_write_updates, restore_snapshot, or other writer tools.",
+      "notes": "Read-only boundary confirmed."
+    }
+  ]
+}

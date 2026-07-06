@@ -1,0 +1,139 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://gaoxia.local/long-novel-agent/desktop-pack-handoff-report.schema.json",
+  "title": "Long Novel Agent Handoff Report",
+  "type": "object",
+  "additionalProperties": true,
+  "required": [
+    "$schema",
+    "ok",
+    "type",
+    "generated_at",
+    "project_dir",
+    "state_dir",
+    "target_chapter",
+    "read_only",
+    "source",
+    "recommended_commands"
+  ],
+  "properties": {
+    "$schema": {
+      "type": "string",
+      "minLength": 1
+    },
+    "ok": {
+      "type": "boolean"
+    },
+    "type": {
+      "const": "handoff_report"
+    },
+    "generated_at": {
+      "type": "string",
+      "minLength": 1
+    },
+    "project_dir": {
+      "type": "string",
+      "minLength": 1
+    },
+    "state_dir": {
+      "type": "string",
+      "minLength": 1
+    },
+    "target_chapter": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "read_only": {
+      "const": true
+    },
+    "source": {
+      "type": "string",
+      "minLength": 1
+    },
+    "status": {
+      "type": "string"
+    },
+    "project": {
+      "type": "object"
+    },
+    "latest_accepted_chapter": {
+      "type": "object"
+    },
+    "handoff": {
+      "type": "string"
+    },
+    "visible_rules": {
+      "type": "object"
+    },
+    "open_debts": {
+      "type": "array"
+    },
+    "open_contracts": {
+      "type": "array"
+    },
+    "resolved_conflicts": {
+      "type": "array"
+    },
+    "visible_fact_count": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "visible_source_count": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "visible_research_count": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "agent_capabilities": {
+      "type": "array"
+    },
+    "recent_agent_activity": {
+      "type": "array"
+    },
+    "pending_proposals": {
+      "type": "array"
+    },
+    "high_risk_proposals": {
+      "type": "array"
+    },
+    "next_agent_brief": {
+      "type": "object"
+    },
+    "required_workflow": {
+      "$ref": "#/$defs/nonEmptyStringArray"
+    },
+    "recommended_commands": {
+      "$ref": "#/$defs/nonEmptyStringArray"
+    },
+    "chapter_context": {
+      "type": "object"
+    },
+    "chapter_context_summary": {
+      "type": "object"
+    },
+    "warnings": {
+      "$ref": "#/$defs/stringArray"
+    },
+    "next_actions": {
+      "$ref": "#/$defs/stringArray"
+    }
+  },
+  "$defs": {
+    "stringArray": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "nonEmptyStringArray": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    }
+  }
+}
