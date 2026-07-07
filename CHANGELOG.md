@@ -6,7 +6,7 @@
 
 - Added a Windows runtime release guide covering manual Windows builds, executable checks, zip packaging, GitHub release upload, and no-Python Windows handoff bundle creation.
 - Added a GitHub Actions template for building and verifying `long-novel-agent.exe` and `long-novel-agent-mcp.exe` on `windows-latest`.
-- Linked the Windows release guide from the English README, Chinese README, and no-Python handoff guide.
+- Linked the Windows release guide from the English README, Chinese README, installation guide, and no-Python handoff guide.
 
 Validation:
 

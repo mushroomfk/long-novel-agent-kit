@@ -78,6 +78,8 @@ release/long-novel-agent-runtime/long-novel-agent desktop-handoff-bundle ./my-no
 
 On the target computer, unzip and run the top-level launcher. It refreshes paths and writes current snippets to `mcp-configs/current/`.
 
+For a publishable Windows `.exe` package, see [Windows Runtime Release](windows-release.md).
+
 ## Platform Notes
 
 - macOS arm64 runtime should be built on macOS arm64.
