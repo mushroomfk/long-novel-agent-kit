@@ -186,6 +186,8 @@ release/long-novel-agent-runtime-macos-arm64/long-novel-agent desktop-handoff-bu
 
 目标电脑解压后运行顶层 `START_HERE.command`、`START_HERE.sh`、`START_HERE.ps1` 或 `START_HERE.cmd`。当 `runtime/` 里两个可执行文件都存在时，目标电脑不需要安装 Python。
 
+Windows `.exe` 版本需要在 Windows 上构建，具体步骤见 [Windows Runtime Release](docs/windows-release.md)。GitHub Actions 模板放在 [docs/github-actions-windows-release.yml](docs/github-actions-windows-release.yml)；只有用于推送的 GitHub token 有 `workflow` scope 时，才把它复制到 `.github/workflows/`。
+
 ## 三分钟试用
 
 ```bash

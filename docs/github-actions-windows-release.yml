@@ -1,0 +1,88 @@
+name: Build Windows Runtime
+
+on:
+  workflow_dispatch:
+  push:
+    tags:
+      - "v*-windows"
+
+jobs:
+  build-windows-runtime:
+    runs-on: windows-latest
+    permissions:
+      contents: write
+    env:
+      KIT_VERSION: "0.7.180"
+      RUNTIME_DIR: release\runtime-windows
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install build dependency
+        shell: pwsh
+        run: |
+          python -m pip install --upgrade pip pyinstaller
+
+      - name: Build standalone Windows runtime
+        shell: pwsh
+        run: |
+          New-Item -ItemType Directory -Force release | Out-Null
+          python cli.py standalone-build `
+            --target-os windows `
+            --output-dir $env:RUNTIME_DIR `
+            --apply `
+            --force `
+            --format json | Tee-Object -FilePath release\windows-build-report.json
+
+      - name: Verify runtime executables
+        shell: pwsh
+        run: |
+          if (!(Test-Path "$env:RUNTIME_DIR\long-novel-agent.exe")) {
+            throw "missing long-novel-agent.exe"
+          }
+          if (!(Test-Path "$env:RUNTIME_DIR\long-novel-agent-mcp.exe")) {
+            throw "missing long-novel-agent-mcp.exe"
+          }
+          & "$env:RUNTIME_DIR\long-novel-agent.exe" doctor | Tee-Object -FilePath release\windows-doctor.json
+          python -m json.tool release\windows-doctor.json | Out-Null
+          & "$env:RUNTIME_DIR\long-novel-agent.exe" proposal-schema > release\proposal-schema.json
+          python -m json.tool release\proposal-schema.json | Out-Null
+
+      - name: Package runtime
+        shell: pwsh
+        run: |
+          $zip = "release\long-novel-agent-kit-windows-runtime-v$env:KIT_VERSION.zip"
+          Compress-Archive `
+            -Path `
+              "$env:RUNTIME_DIR\long-novel-agent.exe", `
+              "$env:RUNTIME_DIR\long-novel-agent-mcp.exe", `
+              "release\windows-build-report.json", `
+              "release\windows-doctor.json" `
+            -DestinationPath $zip `
+            -Force
+          Get-Item $zip
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: long-novel-agent-kit-windows-runtime-v${{ env.KIT_VERSION }}
+          path: release/long-novel-agent-kit-windows-runtime-v${{ env.KIT_VERSION }}.zip
+          if-no-files-found: error
+
+      - name: Upload to GitHub release
+        if: startsWith(github.ref, 'refs/tags/')
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          $tag = $env:GITHUB_REF_NAME
+          $zip = "release\long-novel-agent-kit-windows-runtime-v$env:KIT_VERSION.zip"
+          gh release view $tag *> $null
+          if ($LASTEXITCODE -ne 0) {
+            gh release create $tag `
+              --title "Long Novel Agent Kit Windows Runtime $tag" `
+              --notes "No-Python Windows runtime. Includes long-novel-agent.exe and long-novel-agent-mcp.exe."
+          }
+          gh release upload $tag $zip --clobber

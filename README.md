@@ -188,6 +188,8 @@ release/long-novel-agent-runtime-macos-arm64/long-novel-agent desktop-handoff-bu
 
 The bundle contains `project/`, `pack/`, `runtime/`, launchers, MCP snippets, runtime command files, and `agent-read-me-first.md`. When both runtime executables are present, the target computer does not need Python.
 
+For a Windows `.exe` release, build on Windows and follow [Windows Runtime Release](docs/windows-release.md). The GitHub Actions template is stored at [docs/github-actions-windows-release.yml](docs/github-actions-windows-release.yml); copy it into `.github/workflows/` only when the GitHub token used for the push has `workflow` scope.
+
 ## Quick Start From Source
 
 ```bash

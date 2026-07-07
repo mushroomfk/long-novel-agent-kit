@@ -42,6 +42,8 @@ py -3.12 cli.py standalone-build `
   --format json
 ```
 
+For a publishable Windows `.exe` package and GitHub Actions workflow template, see [Windows Runtime Release](windows-release.md).
+
 ## Create Bundle
 
 ```bash

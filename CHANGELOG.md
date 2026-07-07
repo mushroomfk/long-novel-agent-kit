@@ -1,5 +1,18 @@
 # Changelog
 
+## 2026-07-07
+
+### Windows Runtime Release Preparation
+
+- Added a Windows runtime release guide covering manual Windows builds, executable checks, zip packaging, GitHub release upload, and no-Python Windows handoff bundle creation.
+- Added a GitHub Actions template for building and verifying `long-novel-agent.exe` and `long-novel-agent-mcp.exe` on `windows-latest`.
+- Linked the Windows release guide from the English README, Chinese README, and no-Python handoff guide.
+
+Validation:
+
+- `python3 cli.py standalone-build --target-os windows --output-dir release/runtime-windows --format json`
+- Windows `.exe` build was not produced on this macOS arm64 machine; PyInstaller Windows runtime must be built on Windows.
+
 ## 2026-07-06
 
 ### Architecture And Capability Documentation
@@ -12,7 +25,7 @@
 Validation:
 
 - `git diff --check`
-- `rg -n "/Users/liuqingxing|/private/tmp|/var/folders|Desktop/小说生成器" . -g '!scripts/adversarial_release_check.py' -g '!*.pyc'`
+- local path leakage scan over repository docs and sources
 - `python3 -m py_compile cli.py server.py install.py scripts/verify_agent_kit.py scripts/adversarial_release_check.py`
 - `python3 scripts/adversarial_release_check.py`
 
